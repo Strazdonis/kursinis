@@ -1,0 +1,62 @@
+body{
+    background-color: #C996FD;
+    padding:  30px;
+    font-family: 'Montserrat';
+}
+/*.col-md-2, .col-md-8{
+    border: 2px solid black;
+}*/
+.btn-color{
+    color:black;
+    background-color:#D9B5FB;
+    border: #D9B5FB;
+}
+
+.btn-color:hover{
+    background-color:#D9B5FB;
+    border: #D9B5FB;
+}
+/* COLORS: 
+    #9E85B7 -  Mygtuku iconai
+    ##9E85B7-  Main textas
+    #C996FD - Paryskintas tekstas
+    #E9DEF4 - Meniu body color
+    #FAF5FF - Contacts body color
+    #FCFAFF - Dashboard body color
+
+
+
+*/
+.jumbo-style{
+    background-color: #ECD9FE;
+    border-radius: 40px;
+    padding: 30px;
+}
+.text-color{
+    color:#9E85B7
+}
+.text-color-p{
+    color:#C996FD
+}
+.text-font-bold{
+    font-weight: bold;
+}
+.text-font-regular{
+    font-weight: 400;
+}
+.rounded-me{
+    border-radius: 50px;
+}
+.bg-color-menu{
+    background-color:#E9DEF4;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.bg-color-contacts{
+    background-color:#FAF5FF;
+}
+.bg-color-dash{
+    background-color:#FCFAFF;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
