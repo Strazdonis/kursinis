@@ -10,6 +10,7 @@ body{
     color:black;
     background-color:#D9B5FB;
     border: #D9B5FB;
+    border-radius: 30px;
 }
 
 .btn-color:hover{
