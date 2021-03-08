@@ -61,3 +61,22 @@ body{
     border-bottom-right-radius: 20px;
     border-top-right-radius: 20px;
 }
+.card-style-1{
+    background-color: #C996FD;
+    border-radius: 30px;
+    border: 1px solid #C996FD;
+    color:#FCFAFF;
+}
+.card-style-2{
+    background-color: #9E85B7;
+    border-radius: 30px;
+    border: 1px solid #9E85B7;
+    color:white;
+    
+}
+.card-style-3{
+    background-color: #ECD9FE;
+    border-radius: 30px;
+    border: 1px solid #ECD9FE;
+    color:#9E85B7;
+}
