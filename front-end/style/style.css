@@ -17,6 +17,45 @@ body{
     background-color:#D9B5FB;
     border: #D9B5FB;
 }
+.btn-color-menu-1{
+    background-color:#C996FD;
+    border: #C996FD;
+    color:#FCFAFF;
+    border-radius: 30px;
+    width: 120px;
+    height: 120px;
+    font-size: medium;
+}
+.btn-color-menu-2{
+    background-color: #9E85B7;
+    border-radius: 30px;
+    border: #9E85B7;
+    color:white;
+    width: 120px;
+    height: 120px;
+    font-size: medium;
+}
+.btn-color-menu-3{
+    background-color: #ECD9FE;
+    border-radius: 30px;
+    border:  #ECD9FE;
+    color:#9E85B7;
+    width: 120px;
+    height: 120px;
+    font-size: medium;
+}
+
+.btn-color-menu-1:hover{
+    background-color: #9E85B7;
+}
+.btn-color-menu-2:hover{
+    background-color: #ECD9FE;
+}
+.btn-color-menu-3:hover{
+    background-color: #C996FD;
+}
+
+
 /* COLORS: 
     #9E85B7 -  Mygtuku iconai
     ##9E85B7-  Main textas
@@ -79,4 +118,10 @@ body{
     border-radius: 30px;
     border: 1px solid #ECD9FE;
     color:#9E85B7;
+}
+.size-icon{
+    font-size: 50px;
+}
+.oppacity-50{
+    color:gray;
 }
