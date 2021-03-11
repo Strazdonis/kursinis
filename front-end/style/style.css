@@ -138,4 +138,20 @@ ul.no-bullets {
     list-style-type: none;
     margin: 0;
     padding: 0;
-  }
+}
+.menu-font{
+    font-weight: 400;
+    font-size: 20px;
+}
+.menu-style{
+    text-decoration: none;
+    color:white;
+    border: 1px solid #C996FD;
+    padding: 6px;
+    border-radius: 20px;
+    background-color: #C996FD;
+}
+.menu-style:hover{
+    text-decoration: none;
+    color:#9E85B7;
+}
