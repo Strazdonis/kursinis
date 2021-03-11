@@ -1,21 +1,23 @@
 body{
     background-color: #C996FD;
-    padding:  30px;
+    padding:  20px;
     font-family: 'Montserrat';
 }
 /*.col-md-2, .col-md-8{
     border: 2px solid black;
 }*/
 .btn-color{
-    color:black;
+    color:white;
     background-color:#D9B5FB;
     border: #D9B5FB;
     border-radius: 30px;
+    padding: 10px;
+    font-size: 20px;
 }
 
 .btn-color:hover{
-    background-color:#D9B5FB;
-    border: #D9B5FB;
+    background-color: #9E85B7;
+    border:  #9E85B7;
 }
 .btn-color-menu-1{
     background-color:#C996FD;
@@ -125,3 +127,15 @@ body{
 .oppacity-50{
     color:gray;
 }
+
+.bord{
+    border: 3px solid black;
+}
+.margin-top-90{
+    margin-top: 60px;
+}
+ul.no-bullets {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
