@@ -63,13 +63,13 @@ body {
 }
 
 .btn-color-menu-1:hover {
-  background-color: #9e85b7;
+  background-color: #9e85b7 !important;
 }
 .btn-color-menu-2:hover {
-  background-color: #ecd9fe;
+  background-color: #ecd9fe !important;
 }
 .btn-color-menu-3:hover {
-  background-color: #c996fd;
+  background-color: #c996fd !important;
 }
 
 /* COLORS: 
