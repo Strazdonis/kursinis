@@ -19,6 +19,9 @@ body {
   background-color: #9e85b7;
   border: #9e85b7;
 }
+.btn-color:focus, .btn-color:active:focus{
+  box-shadow: 0 0 0 .25rem rgba(201, 150, 253, 0.5);
+}
 .btn-color-menu-1 {
   background-color: #c996fd !important;
   border: #c996fd !important;
