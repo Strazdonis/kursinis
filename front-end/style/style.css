@@ -29,8 +29,15 @@ body {
   font-size: medium;
 }
 
-.btn-color-menu-1:focus {
+.btn-color-menu-1:focus, .btn-color-menu-1:active:focus {
   box-shadow: 0 0 0 .25rem rgba(201, 150, 253, 0.5);
+}
+.input-join:focus{
+  box-shadow: 0 0 0 .25rem rgba(201, 150, 253, 0.5);
+  border: #9e85b7;
+}
+.input-join{
+  padding: 10px;
 }
 
 .btn-color-menu-2 {
@@ -43,7 +50,7 @@ body {
   font-size: medium;
 }
 
-.btn-color-menu-2:focus {
+.btn-color-menu-2:focus, .btn-color-menu-2:active:focus {
   box-shadow: 0 0 0 .25rem rgba(158, 133, 183, 0.5);
 }
 
@@ -58,7 +65,7 @@ body {
   font-size: medium;
 }
 
-.btn-color-menu-3:focus {
+.btn-color-menu-3:focus, .btn-color-menu-3:active:focus {
   box-shadow: 0 0 0 .25rem rgba(236, 217, 254, 0.5);
 }
 
@@ -105,16 +112,16 @@ body {
 }
 .bg-color-menu {
   background-color: #e9def4;
-  border-bottom-left-radius: 20px;
-  border-top-left-radius: 20px;
+  border-bottom-left-radius: 40px;
+  border-top-left-radius: 40px;
 }
 .bg-color-contacts {
   background-color: #faf5ff;
 }
 .bg-color-dash {
   background-color: #fcfaff;
-  border-bottom-right-radius: 20px;
-  border-top-right-radius: 20px;
+  border-bottom-right-radius: 40px;
+  border-top-right-radius: 40px;
 }
 .card-style-1 {
   background-color: #c996fd;
@@ -140,7 +147,6 @@ body {
 .oppacity-50 {
   color: gray;
 }
-
 .bord {
   border: 3px solid black;
 }
@@ -171,5 +177,55 @@ ul.no-bullets {
 
 .menu-style:hover {
   text-decoration: none;
-  color: #9e85b7;
+  color: white;
+  background-color: #9e85b7;
+  border-color: #9e85b7;
+}
+.radius-20{
+  border-radius: 20px;
+}
+.meeting-button-join{
+  color:white;
+  background-color: #c996fd;
+  border: #c996fd;
+  border-radius: 20px;
+}
+.meeting-button-join:hover{
+  background-color: #9e85b7;
+}
+.meeting-button-join:focus, .meeting-button-join:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(236, 217, 254, 0.5);
+  background-color: #9e85b7;
+}
+.meeting-button-join-add{
+  color:white;
+  background-color: #9e85b7;
+  border: #9e85b7;
+  border-radius: 20px;
+}
+.meeting-button-join-add:hover{
+  background-color: #c996fd;
+}
+.meeting-button-join-add:focus, .meeting-button-join-add:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(236, 217, 254, 0.5);
+  background-color: #c996fd;
+}
+.font-list{
+  font-size: 20px;
+  list-style-type: none;
+}
+.meeting-save{
+  text-decoration: none;
+  color: white;
+  border: 1px solid #d9b5fb;
+  background-color: #d9b5fb;
+  padding: 5px;
+  border-radius: 30px;
+  padding: 7px;
+}
+.meeting-save:hover{
+  text-decoration: none;
+  color: white;
+  background-color: #9e85b7;
+  border-color: #d9b5fb;
 }
