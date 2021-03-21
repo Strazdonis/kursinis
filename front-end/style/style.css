@@ -7,12 +7,14 @@ body {
     border: 2px solid black;
 }*/
 .btn-color {
-  color: white;
-  background-color: #d9b5fb;
-  border: #d9b5fb;
-  border-radius: 30px;
+  color: #9e85b7;
+  background-color: #e9def4; 
+  border: #c996fd; 
+  border-radius: 30px;  
   padding: 10px;
-  font-size: 20px;
+  font-size: 25px;
+  font-weight: 700;
+
 }
 
 .btn-color:hover {
