@@ -17,6 +17,15 @@ app.use(express.json());
 app.use(require('express-session')({ secret: 'TODO: use .env to pass a secret here :)', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static('public'));
+
+const handlebars = require('express-handlebars');
+app.set('view engine', 'hbs');
+app.engine('hbs', handlebars({
+    layoutsDir: __dirname + '/views/layouts',
+    extname: 'hbs',
+   // defaultLayout: 'default',
+}));
 
 const routePath = "./routes/";
 // dynamically load routes from /routes
