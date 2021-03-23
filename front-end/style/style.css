@@ -117,16 +117,16 @@ body {
 }
 .bg-color-menu {
   background-color: #e9def4;
-  border-bottom-left-radius: 40px;
-  border-top-left-radius: 40px;
+  border-bottom-left-radius: 60px;
+  border-top-left-radius: 60px;
 }
 .bg-color-contacts {
   background-color: #faf5ff;
 }
 .bg-color-dash {
   background-color: #fcfaff;
-  border-bottom-right-radius: 40px;
-  border-top-right-radius: 40px;
+  border-bottom-right-radius: 60px;
+  border-top-right-radius: 60px;
 }
 .card-style-1 {
   background-color: #c996fd;
@@ -233,4 +233,18 @@ ul.no-bullets {
   color: white;
   background-color: #9e85b7;
   border-color: #d9b5fb;
+}
+.user-logo-design{
+  border: 1px solid #c996fd;
+  background-color: #c996fd;
+  text-align: center;
+  color: #8512FB;
+  border-radius: 15px;
+}
+.drop-down-style{
+  font-size: 25px;
+  color:black;
+}
+.drop-down-style:hover{
+  color:gray;
 }
