@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "requirements-check": "node utils/check_node_version.js",
-    "postinstall": "npm run requirements-check"
+    "postinstall": "npm run requirements-check",
+    "dev": "nodemon index.js"
   },
   "engineStrict": true,
   "engines": {
@@ -21,11 +22,15 @@
     "express-session": "^1.17.1",
     "helmet": "^4.4.1",
     "helmet-csp": "^3.3.1",
+    "mongoose": "^5.12.2",
     "morgan": "^1.10.0",
     "os-utils": "^0.0.14",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "semver": "^7.3.4",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
