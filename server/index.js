@@ -5,7 +5,8 @@ const morgan = require('morgan');
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const helmet = require('helmet');
-const {generateNonce, getDirectives, loadRoutes} = require('./utils/expressUtils');
+const { generateNonce, getDirectives, loadRoutes } = require('./utils/expressUtils');
+const { models, connectDb } = require('./models/index');
 
 // basic security
 app.use(helmet());
@@ -67,7 +68,10 @@ passport.deserializeUser(function (id, cb) {
     });
 });
 
+connectDb().then(async () => {
+    app.listen(3000, _ => { console.log("App is listening on http://localhost:3000"); });
+});
 
 
 
-app.listen(3000, _ => { console.log("App is listening on http://localhost:3000"); });
+
