@@ -43,6 +43,7 @@ body {
 }
 .input-join{
   padding: 10px;
+  border: 2px solid #9e85b7;
 }
 
 .btn-color-menu-2 {
@@ -163,28 +164,15 @@ ul.no-bullets {
   margin: 0;
   padding: 0;
 }
-.menu-font {
-  font-weight: 400;
-  font-size: 20px;
-}
 .menu-style {
   text-decoration: none;
-  color: white;
-  border: 1px solid #c996fd;
-  padding: 6px;
-  border-radius: 20px;
-  background-color: #c996fd;
-  display: block;
-  /* responsiveness breaks on ~900px screen width */
-  width: 90%;
+  color: #9e85b7;
 }
 
 
 .menu-style:hover {
   text-decoration: none;
   color: white;
-  background-color: #9e85b7;
-  border-color: #9e85b7;
 }
 .radius-20{
   border-radius: 20px;
@@ -249,7 +237,7 @@ ul.no-bullets {
   color:gray;
 }
 .margin-top-con{
-  margin-top: 120px;
+  margin-top: 100px;
 }
 /* Drop Down Menu Button*/
 .dropbtn {
@@ -285,4 +273,7 @@ ul.no-bullets {
   background-color: #fcfaff;
   color: grey;
 }
-/*Circle IMG*/
+/* -------- */
+.size-icon-menu{
+  font-size: 40px;
+}
