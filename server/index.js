@@ -1,23 +1,39 @@
 /* jshint esversion: 9 */
 const express = require('express');
+require('dotenv').config();
 const app = express();
 const morgan = require('morgan');
 const passport = require('passport');
-const Strategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const helmet = require('helmet');
 const { generateNonce, getDirectives, loadRoutes } = require('./utils/expressUtils');
-const { models, connectDb } = require('./models/index');
-
+const { connectDb } = require('./models/index');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const User = require('./models/user');
 // basic security
 app.use(helmet());
 // logging requests
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 // parse json
 app.use(express.json());
+
 // session handling
-app.use(require('express-session')({ secret: 'TODO: use .env to pass a secret here :)', resave: false, saveUninitialized: false }));
+const sessionStore = new MongoStore({ mongoUrl: process.env.DB_URI, collection: 'sessions' });
+// TODO: set expiration date etc.
+app.use(session
+    ({
+        secret: process.env.SESSION_PASSWORD,
+        resave: false,
+        saveUninitialized: false,
+        store: sessionStore,
+    })
+);
+
+// authorization handling
 app.use(passport.initialize());
 app.use(passport.session());
+
 // serve static files in / from public/
 app.use(express.static('public'));
 
@@ -34,41 +50,34 @@ app.engine('hbs', handlebars({
     // defaultLayout: 'default',
 }));
 
+// handle content securicy policy to only allow required files to be loaded
 app.use(generateNonce);
 app.use(csp({
     directives: getDirectives()
 }));
 
+// based on https://www.npmjs.com/package/passport-local-mongoose
+// https://levelup.gitconnected.com/everything-you-need-to-know-about-the-passport-local-passport-js-strategy-633bbab6195?gi=e202dce394bf
+// https://mherman.org/blog/user-authentication-with-passport-dot-js/
+passport.use(new LocalStrategy(User.authenticate()));
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+sessionStore.on('set', data => {
+    console.log("saved session", data);
+});
+
+
 const routePath = "./routes/";
 // dynamically load routes from /routes
 loadRoutes(routePath, app);
 
-// TODO: Connect with DB (db must be database, db.users.findByUsername must search for users in DB and return data based on that.)
-// Readmore: https://github.com/passport/express-4.x-local-example/blob/master/server.js
-passport.use(new Strategy(
-    function (username, password, cb) {
-        db.users.findByUsername(username, function (err, user) {
-            if (err) { return cb(err); }
-            if (!user) { return cb(null, false); }
-            if (user.password != password) { return cb(null, false); }
-            return cb(null, user);
-        });
-    }));
+
+connectDb().then(async (connection) => {
 
 
-// serialize & deserialise user so it can be passed around with session
-passport.serializeUser(function (user, cb) {
-    cb(null, user.id);
-});
-
-passport.deserializeUser(function (id, cb) {
-    db.users.findById(id, function (err, user) {
-        if (err) { return cb(err); }
-        cb(null, user);
-    });
-});
-
-connectDb().then(async () => {
     app.listen(3000, _ => { console.log("App is listening on http://localhost:3000"); });
 });
 
