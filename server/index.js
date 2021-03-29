@@ -1,4 +1,3 @@
-/* jshint esversion: 9 */
 const express = require('express');
 require('dotenv').config();
 const app = express();
@@ -7,10 +6,10 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const helmet = require('helmet');
 const { generateNonce, getDirectives, loadRoutes } = require('./utils/expressUtils');
-const { connectDb } = require('./models/index');
+const { connectDb, models } = require('./models/index');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const User = require('./models/user');
+const User = models.User;
 // basic security
 app.use(helmet());
 // logging requests

@@ -1,4 +1,3 @@
-/* jshint esversion: 9 */
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
