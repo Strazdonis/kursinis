@@ -14,7 +14,7 @@ module.exports = function (app) {
         } else if (typeof track == "string") {
             track = track.toUpperCase();
         } else {
-            return res.send(400, {err: "unexpected crypto format."});
+            return res.send(400, { err: "unexpected crypto format." });
         }
 
         // TODO: use a more mongoose approach by saving model?
@@ -25,7 +25,15 @@ module.exports = function (app) {
         //!"... when using the findAndModify helpers, 
         //!the following are not applied: defaults, setters, validators, middleware"
         //https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
-        Crypto.findOneAndUpdate({ user }, { crypto: track }, { upsert: true, new: true }, function (err, doc) {
+        Crypto.findOneAndUpdate({ user }, { crypto: track }, { upsert: true, new: true }, (err, doc) => {
+            if (err) return res.send(500, { error: err });
+            return res.json({ message: "success", result: doc });
+        });
+    });
+    app.get('/track-crypto', (req, res) => {
+        const body = req.body;
+        const user = req.user._id;
+        Crypto.findOne({ user }, (err, doc) => {
             if (err) return res.send(500, { error: err });
             return res.json({ message: "success", result: doc });
         });
