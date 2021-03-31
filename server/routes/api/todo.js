@@ -21,7 +21,7 @@ module.exports = (app) => {
         todo.task = task;
         todo.state = "active";
 
-        Todo.save((err, doc) => {
+        todo.save((err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
