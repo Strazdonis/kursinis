@@ -53,14 +53,14 @@ module.exports = {
         };
     },
 
-    loadRoutes: function (routePath, app) {
+    loadRoutes: function (routePath, router, dir) {
         fs.readdirSync(routePath).forEach(function (file) {
-            console.log(file);
+            if(!file.includes('.js')) return;
             const route = routePath + file;
-            require(`../${route}`)(app);
-            console.log("[Route] /" + file);
-
-        })
+            require(`../${route}`)(router);
+            //print nicely to console to see all routes
+            console.log(`[${dir}]${dir==="API"?"  ":""} ${dir === "API" ? "/api/" : "/"}${file}`);
+        });
     },
 
 

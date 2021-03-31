@@ -1,21 +1,25 @@
 const mongoose = require('mongoose');
-const User = require("../models/user");
+const User = require("../../models/user");
 
-module.exports = function (app) {
-    app.post('/api/login', (req, res) => {
+module.exports = (app) => {
+    app.post('/login', (req, res) => {
         const data = req.body;
-        console.log(data);
         var authenticate = User.authenticate();
+        if (typeof data.username !== "string" || typeof data.password !== "string") {
+            return res.status(400).json({ error: "bad request" });
+        }
         authenticate(data.username, data.password, function (err, result) {
             if (err) {
                 //TODO: return more reasonable messages & status codes, document them
-                return res.send(500, {error: err});
+                return res.status(500).json({ error: err });
             }
-            
+            if(!result) {
+                return res.status(401).json({ error: "wrong login" });
+            }
             req.logIn(result, function (err) {
                 if (err) {
                     console.error(err);
-                    return res.send(500, {error: err});
+                    return res.status(500).json({ error: err });
                 }
 
                 return res.json({
@@ -24,7 +28,6 @@ module.exports = function (app) {
                     user: result
                 });
             });
-
         });
     });
 };

@@ -8,24 +8,37 @@ const helmet = require('helmet');
 const { generateNonce, getDirectives, loadRoutes } = require('./utils/expressUtils');
 const { connectDb, models } = require('./models/index');
 const session = require('express-session');
+const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
 const User = models.User;
+const router = express.Router();
+const apiRouter = express.Router();
+
 // basic security
 app.use(helmet());
 // logging requests
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 // parse json
 app.use(express.json());
-
+//sanitize input
+app.use(mongoSanitize());
 // session handling
 const sessionStore = new MongoStore({ mongoUrl: process.env.DB_URI, collection: 'sessions' });
 // TODO: set expiration date etc.
 app.use(session
     ({
+       // name: "talkie.sid", // passport breaks if i set this
         secret: process.env.SESSION_PASSWORD,
         resave: false,
         saveUninitialized: false,
         store: sessionStore,
+        cookie: {
+            secure: true,
+            path: "/",
+            sameSite: "strict",
+            httpOnly: true,
+            maxAge: 31556952000, // 1 year
+        }
     })
 );
 
@@ -70,13 +83,30 @@ sessionStore.on('set', data => {
 
 
 const routePath = "./routes/";
-// dynamically load routes from /routes
-loadRoutes(routePath, app);
 
+// dynamically load routes from /routes
+loadRoutes(routePath, router, 'Route');
+
+const apiRoutePath = "./routes/api/";
+
+router.use(function (req, res, next) {
+    // API-only middleware, check if logged in etc.
+    const split = req.url.split("/");
+    const endpoint = split[split.length - 2];
+    //TODO: get these more dynamically
+    const AuthOnly = ["crypto", "logout", "todo"];
+    if(AuthOnly.includes(endpoint) && !req.isAuthenticated()) {
+        return res.status(401).json({error: "You must be logged in!"});
+    }
+    next();
+});
+
+loadRoutes(apiRoutePath, apiRouter, 'API');
+
+app.use('/', router);
+app.use('/api', apiRouter);
 
 connectDb().then(async (connection) => {
-
-
     app.listen(3000, _ => { console.log("App is listening on http://localhost:3000"); });
 });
 
