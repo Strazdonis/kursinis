@@ -1,9 +1,29 @@
 body{
 	background-color: #C996FD;
-	padding: 60px;
+	padding: 50px;
 	font-family: "Montserrat";
 }
 .bord{
 	border: 2px solid black;
 }
-
+.right-style{
+	background-color: #E9DEF4;
+	border-bottom-left-radius: 60px;
+	border-top-left-radius: 60px;
+}
+.left-style{
+	background-color: #FCFAFF;
+	border-bottom-right-radius: 60px;
+	border-top-right-radius: 60px;
+}
+.slogan{
+	color:#9E85B7;
+	font-family: "Pacifico";
+}
+.slogan2{
+	color:#9E85B7;
+	font-weight: bold;
+}
+.text-lighter{
+	color:#C996FD;
+}
