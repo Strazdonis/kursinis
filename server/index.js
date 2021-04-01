@@ -1,7 +1,6 @@
 const express = require('express');
 require('dotenv').config();
 const app = express();
-const morgan = require('morgan');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const helmet = require('helmet');
@@ -13,11 +12,12 @@ const MongoStore = require('connect-mongo');
 const User = models.User;
 const router = express.Router();
 const apiRouter = express.Router();
+const { apiRouterMiddleware, httpLogger } = require('./utils/middlewares');
 
 // basic security
 app.use(helmet());
 // logging requests
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+app.use(httpLogger);
 // parse json
 app.use(express.json());
 //sanitize input
@@ -27,7 +27,7 @@ const sessionStore = new MongoStore({ mongoUrl: process.env.DB_URI, collection: 
 // TODO: set expiration date etc.
 app.use(session
     ({
-       // name: "talkie.sid", // passport breaks if i set this
+        // name: "talkie.sid", // passport breaks if i set this
         secret: process.env.SESSION_PASSWORD,
         resave: false,
         saveUninitialized: false,
@@ -81,7 +81,6 @@ sessionStore.on('set', data => {
     console.log("saved session", data);
 });
 
-
 const routePath = "./routes/";
 
 // dynamically load routes from /routes
@@ -89,17 +88,7 @@ loadRoutes(routePath, router, 'Route');
 
 const apiRoutePath = "./routes/api/";
 
-router.use(function (req, res, next) {
-    // API-only middleware, check if logged in etc.
-    const split = req.url.split("/");
-    const endpoint = split[split.length - 2];
-    //TODO: get these more dynamically
-    const AuthOnly = ["crypto", "logout", "todo"];
-    if(AuthOnly.includes(endpoint) && !req.isAuthenticated()) {
-        return res.status(401).json({error: "You must be logged in!"});
-    }
-    next();
-});
+apiRouter.use(apiRouterMiddleware);
 
 loadRoutes(apiRoutePath, apiRouter, 'API');
 

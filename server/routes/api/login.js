@@ -21,11 +21,19 @@ module.exports = (app) => {
                     console.error(err);
                     return res.status(500).json({ error: err });
                 }
+                const payload = {
+                    perms: result.perms,
+                    verified: result.verified,
+                    username: result.username,
+                    fullname: result.fullname,
+                    city: result.city,
+                };
 
+                
                 return res.json({
                     success: true,
                     message: 'Successful Login',
-                    user: result
+                    user: payload
                 });
             });
         });
