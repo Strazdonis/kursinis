@@ -4,7 +4,7 @@ const app = express();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const helmet = require('helmet');
-const { generateNonce, getDirectives, loadRoutes } = require('./utils/expressUtils');
+const { getDirectives, loadRoutes } = require('./utils/expressUtils');
 const { connectDb, models } = require('./models/index');
 const session = require('express-session');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -12,7 +12,7 @@ const MongoStore = require('connect-mongo');
 const User = models.User;
 const router = express.Router();
 const apiRouter = express.Router();
-const { apiRouterMiddleware, httpLogger } = require('./utils/middlewares');
+const { apiRouterMiddleware, httpLogger, generateNonce } = require('./utils/middlewares');
 
 // basic security
 app.use(helmet());

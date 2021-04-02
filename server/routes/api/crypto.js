@@ -1,4 +1,5 @@
 const Crypto = require('../../models/crypto');
+const { getManyCryptoData } = require('../../utils/crypto');
 module.exports = function (router) {
     router.post('/crypto', (req, res) => {
         const body = req.body;
@@ -6,10 +7,11 @@ module.exports = function (router) {
         //TODO: validate if crypto is even available
         //TODO: reject non-arrays?
         if (Array.isArray(track)) {
-            track = track.map(c => c.toUpperCase());
+            track = track.map(c => c.toLowerCase());
         } else if (typeof track == "string") {
-            track = track.toUpperCase();
+            track = track.toLowerCase();
         } else {
+            console.log(typeof track);
             return res.status(400).json({ error: "bad request" });
         }
 
@@ -28,17 +30,17 @@ module.exports = function (router) {
         });
     });
     router.get('/crypto', (req, res) => {
-        console.log(req.isAuthenticated());
         const user = req.user._id;
-        
-        console.log(user);
-        console.table(user);
 
-        Crypto.findOne({ user: user }, (err, doc) => {
+        Crypto.findOne({ user: user }, async (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            // return res.json({ message: "success", result: doc });
+            const list = doc.crypto;
+            const ids = list.join(",");
+            const data = await getManyCryptoData(ids);
+            return res.json(data);
         });
     });
 };

@@ -1,17 +1,9 @@
 const fs = require('fs');
-const uuid = require(`uuid`);
 module.exports = {
-
-    generateNonce: function (req, res, next) {
-        const rhyphen = /-/g;
-        res.locals.nonce = uuid.v4().replace(rhyphen, ``);
-        next();
-    },
 
     getNonce: function (req, res) {
         return `'nonce-${res.locals.nonce}'`;
     },
-
 
     getDirectives: function () {
         const self = `'self'`;
@@ -34,7 +26,7 @@ module.exports = {
 
         ];
         const connect = [
-
+            "https://api.coincap.io/",
         ];
 
         return {
