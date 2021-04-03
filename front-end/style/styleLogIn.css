@@ -53,7 +53,7 @@ body{
 	font-size: 15px;
 }
 .create-link:hover{
-	color: black;
+	color: grey;
 }
 .sign-button{
 	text-decoration: none;
