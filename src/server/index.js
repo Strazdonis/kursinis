@@ -16,9 +16,11 @@ const { apiRouterMiddleware, httpLogger, generateNonce } = require('./utils/midd
 // not needed here but this makes pkg package it for mongodb
 const saslprep = require("saslprep");
 
-if(!checkDotEnv()) {
+if (!checkDotEnv()) {
     console.warn("[Warning] Couldn't find .env file which is used for configuration. Program may work incorrectly.")
 }
+
+
 
 // basic security
 app.use(helmet());
@@ -26,6 +28,7 @@ app.use(helmet());
 app.use(httpLogger);
 // parse json
 app.use(express.json());
+
 //sanitize input
 app.use(mongoSanitize());
 // session handling
@@ -68,6 +71,11 @@ app.engine('hbs', handlebars({
     // defaultLayout: 'default',
 }));
 
+// parse form data (for login/registration)
+app.use(express.urlencoded({
+    extended: true,
+}))
+
 // handle content securicy policy to only allow required files to be loaded
 app.use(generateNonce);
 app.use(csp({
@@ -103,7 +111,7 @@ app.use('/api', apiRouter);
 
 connectDb().then(async (connection) => {
     const port = process.env.PORT || 3000;
-    app.listen(port, _ => { console.log("App is listening on http://localhost:"+port); });
+    app.listen(port, _ => { console.log("App is listening on http://localhost:" + port); });
 });
 
 

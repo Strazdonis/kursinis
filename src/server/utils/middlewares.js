@@ -13,7 +13,7 @@ module.exports = {
         next();
     }),
     generateNonce: function (req, res, next) {
-        
+
         const rhyphen = /-/g;
         res.locals.nonce = uuid.v4().replace(rhyphen, ``);
         next();
@@ -21,4 +21,17 @@ module.exports = {
     httpLogger: morgan(
         ':method :url :status :res[content-length] - :response-time ms',
     ),
+    auth: {
+        required: (req, res, next) => {
+            if (req.isAuthenticated()) {
+                return next();
+            }
+            else {
+                res.redirect('/login');
+            }
+        },
+        optional: (req, res, next) => {
+            return next();
+        },
+    }
 };

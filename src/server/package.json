@@ -43,7 +43,10 @@
   },
   "pkg": {
     "scripts": "routes/**/*.js",
-    "assets": ["views/**/*", "node_modules/saslprep/code-points.mem"],
+    "assets": [
+      "views/**/*",
+      "node_modules/saslprep/code-points.mem"
+    ],
     "targets": [
       "node14-windows-x86",
       "node14-linux-x64"

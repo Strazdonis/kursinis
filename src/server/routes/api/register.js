@@ -14,20 +14,28 @@ function makeid(length) {
 module.exports = (app) => {
     app.post('/register', (req, res) => {
         const data = req.body;
-        if (typeof username !== "string" || typeof data.password !== "string" ) {
-            return res.status(400).json({ error: "bad request" });
+        console.log(data);
+        if (typeof data.username !== "string" || typeof data.password !== "string") {
+
+            return res.status(400).json({ error: { message: "bad request" } });
         }
         if (data.username.length < 6 || data.password.length < 6) {
-            return res.status(400).json({ error: "username and password must be at least 6 characters long" });
+            return res.status(400).json({ error: { message: "username and password must be at least 6 characters long" } });
+        }
+        if (data.password != data.password2) {
+            return res.status(400).json({ error: { message: "passwords dont match" } });
         }
         const code = makeid(16);
         User.register({ username: data.username, email: data.email, code: code, fullname: `${data.firstname} ${data.lastname}`, city: data.city }, data.password, function (err, user) {
             if (err) {
                 //TODO: return more reasonable messages & status codes, document them
-                res.status(500).json({ error: err });
+                if(err.driver && err.keyPattern.email) {
+                    return res.status(500).json({ error: {message: "This email is already in use"} });
+                }
+                return res.status(500).json({ error: err });
             }
             console.log(user);
-            res.send(200, { message: "success" });
+            return res.send(200, { success: true, message: "registered, you can now login" });
         });
     });
 };
