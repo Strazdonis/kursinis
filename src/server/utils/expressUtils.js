@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 module.exports = {
 
     getNonce: function (req, res) {
@@ -49,11 +50,15 @@ module.exports = {
         fs.readdirSync(routePath).forEach(function (file) {
             if(!file.includes('.js')) return;
             const route = routePath + file;
-            require(`../${route}`)(router);
+            require(path.join("../", route))(router);
             //print nicely to console to see all routes
             console.log(`[${dir}]${dir==="API"?"  ":""} ${dir === "API" ? "/api/" : "/"}${file}`);
         });
     },
+
+    checkDotEnv: () => {
+        return process.env.ENV_EXISTS;
+    }
 
 
 };

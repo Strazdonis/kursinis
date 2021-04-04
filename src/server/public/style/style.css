@@ -1,0 +1,322 @@
+body {
+  background-color: #c996fd;
+  padding: 20px;
+  font-family: "Montserrat";
+}
+/*.col-md-2, .col-md-8{
+    border: 2px solid black;
+}*/
+.btn-color {
+  color: #9e85b7;
+  background-color: #e9def4; 
+  border: #c996fd; 
+  border-radius: 30px;  
+  padding: 0px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.btn-color:hover {
+  background-color: #9e85b7;
+  border: #9e85b7;
+}
+.btn-color:focus, .btn-color:active:focus{
+  box-shadow: 0 0 0 .25rem rgba(201, 150, 253, 0.5);
+}
+.btn-color-menu-1 {
+  background-color: #c996fd !important;
+  border: #c996fd !important;
+  color: #fcfaff;
+  border-radius: 30px;
+  width: 120px;
+  height: 120px;
+  font-size: medium;
+}
+
+.btn-color-menu-1:focus, .btn-color-menu-1:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(201, 150, 253, 0.5);
+}
+.input-join:focus{
+  box-shadow: 0 0 0 .25rem rgba(201, 150, 253, 0.5);
+  border: #9e85b7;
+}
+.input-join{
+  padding: 10px;
+  border: 2px solid #9e85b7;
+}
+
+.btn-color-menu-2 {
+  background-color: #9e85b7 !important;
+  border-radius: 30px;
+  border: #9e85b7 !important;
+  color: white;
+  width: 120px;
+  height: 120px;
+  font-size: medium;
+}
+
+.btn-color-menu-2:focus, .btn-color-menu-2:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(158, 133, 183, 0.5);
+}
+
+
+.btn-color-menu-3 {
+  background-color: #ecd9fe !important;
+  border-radius: 30px;
+  border: #ecd9fe !important;
+  color: #9e85b7;
+  width: 120px;
+  height: 120px;
+  font-size: medium;
+}
+
+.btn-color-menu-3:focus, .btn-color-menu-3:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(236, 217, 254, 0.5);
+}
+
+.btn-color-menu-1:hover {
+  background-color: #9e85b7 !important;
+}
+.btn-color-menu-2:hover {
+  background-color: #ecd9fe !important;
+}
+.btn-color-menu-3:hover {
+  background-color: #c996fd !important;
+}
+
+/* COLORS: 
+    #9E85B7 -  Mygtuku iconai
+    ##9E85B7-  Main textas
+    #C996FD - Paryskintas tekstas
+    #E9DEF4 - Meniu body color
+    #FAF5FF - Contacts body color
+    #FCFAFF - Dashboard body color
+
+
+
+*/
+.jumbo-style {
+  background-color: #ecd9fe;
+  border-radius: 40px;
+  padding: 30px;
+}
+.text-color {
+  color: #9e85b7;
+}
+.text-color-p {
+  color: #c996fd;
+}
+.text-font-bold {
+  font-weight: bold;
+}
+.text-font-regular {
+  font-weight: 400;
+}
+.rounded-me {
+  border-radius: 50px;
+}
+.bg-color-menu {
+  background-color: #e9def4;
+  border-bottom-left-radius: 60px;
+  border-top-left-radius: 60px;
+}
+.bg-color-contacts {
+  background-color: #faf5ff;
+}
+.bg-color-dash {
+  background-color: #fcfaff;
+  border-bottom-right-radius: 60px;
+  border-top-right-radius: 60px;
+}
+.card-style-1 {
+  background-color: #c996fd;
+  border-radius: 30px;
+  border: 1px solid #c996fd;
+  color: #fcfaff;
+}
+.card-style-2 {
+  background-color: #9e85b7;
+  border-radius: 30px;
+  border: 1px solid #9e85b7;
+  color: white;
+}
+.card-style-3 {
+  background-color: #ecd9fe;
+  border-radius: 30px;
+  border: 1px solid #ecd9fe;
+  color: #9e85b7;
+}
+.size-icon {
+  font-size: 50px;
+}
+.oppacity-50 {
+  color: gray;
+}
+.bord {
+  border: 3px solid black;
+}
+.margin-top-90 {
+  margin-top: 60px;
+}
+ul.no-bullets {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-style {
+  text-decoration: none;
+  color: #9e85b7;
+}
+
+
+.menu-style:hover {
+  text-decoration: none;
+  color: white;
+}
+.radius-20{
+  border-radius: 20px;
+}
+.meeting-button-join{
+  color:white;
+  background-color: #c996fd;
+  border: #c996fd;
+  border-radius: 20px;
+}
+.meeting-button-join:hover{
+  background-color: #9e85b7;
+}
+.meeting-button-join:focus, .meeting-button-join:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(236, 217, 254, 0.5);
+  background-color: #9e85b7;
+}
+.meeting-button-join-add{
+  color:white;
+  background-color: #9e85b7;
+  border: #9e85b7;
+  border-radius: 20px;
+}
+.meeting-button-join-add:hover{
+  background-color: #c996fd;
+}
+.meeting-button-join-add:focus, .meeting-button-join-add:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(236, 217, 254, 0.5);
+  background-color: #c996fd;
+}
+.font-list{
+  font-size: 20px;
+  list-style-type: none;
+}
+.meeting-save{
+  text-decoration: none;
+  color: white;
+  border: 1px solid #d9b5fb;
+  background-color: #d9b5fb;
+  padding: 5px;
+  border-radius: 30px;
+  padding: 7px;
+}
+.meeting-save:hover{
+  text-decoration: none;
+  color: white;
+  background-color: #9e85b7;
+  border-color: #d9b5fb;
+}
+.user-logo-design{
+  border: 1px solid #c996fd;
+  background-color: #c996fd;
+  text-align: center;
+  color: #8512FB;
+  border-radius: 15px;
+}
+.drop-down-style{
+  font-size: 25px;
+  color:black;
+}
+.drop-down-style:hover{
+  color:gray;
+}
+.margin-top-con{
+  margin-top: 100px;
+}
+/* Drop Down Menu Button*/
+.dropbtn {
+  color: #000000;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #fcfaff;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown:hover .dropbtn {
+  background-color: #fcfaff;
+  color: grey;
+}
+/* -------- */
+.size-icon-menu{
+  font-size: 35px;
+}
+.font-size-menu{
+  font-size: 13px;
+  font-weight: 550;
+}
+.font-size-menu-home{
+  font-size: 20px;
+  font-weight: 600;
+}
+.btn-call-1 {
+  background-color: #c996fd !important;
+  border: #c996fd !important;
+  color: #fcfaff;
+  border-radius: 30px;
+  width: 100px;
+  height: 100px;
+  font-size: medium;
+}
+.btn-call-1:hover{
+  opacity: 0.8;
+}
+.btn-call-1:focus, .btn-call-1:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(158, 133, 183, 0.5);
+}
+.btn-call-2 {
+  background-color: #9e85b7 !important;
+  border: #9e85b7 !important;
+  color: #fcfaff;
+  border-radius: 30px;
+  width: 100px;
+  height: 100px;
+  font-size: medium;
+}
+.btn-call-2:hover{
+  opacity: 0.8;
+}
+.btn-call-2:focus, .btn-call-2:active:focus {
+  box-shadow: 0 0 0 .25rem rgba(158, 133, 183, 0.5);
+}
+.size-icon-call{
+  font-size: 35px;
+}
+.text-call{
+  font-size: 12px;
+}

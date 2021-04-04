@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "requirements-check": "node utils/check_node_version.js",
     "postinstall": "npm run requirements-check",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "pkg ."
   },
   "engineStrict": true,
   "engines": {
@@ -32,10 +34,20 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
+    "saslprep": "^1.0.3",
     "semver": "^7.3.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
+  },
+  "pkg": {
+    "scripts": "routes/**/*.js",
+    "assets": ["views/**/*", "node_modules/saslprep/code-points.mem"],
+    "targets": [
+      "node14-windows-x86",
+      "node14-linux-x64"
+    ],
+    "outputPath": "../../build/server.exe"
   }
 }

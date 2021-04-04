@@ -4,7 +4,7 @@ const app = express();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const helmet = require('helmet');
-const { getDirectives, loadRoutes } = require('./utils/expressUtils');
+const { getDirectives, loadRoutes, checkDotEnv } = require('./utils/expressUtils');
 const { connectDb, models } = require('./models/index');
 const session = require('express-session');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -13,6 +13,12 @@ const User = models.User;
 const router = express.Router();
 const apiRouter = express.Router();
 const { apiRouterMiddleware, httpLogger, generateNonce } = require('./utils/middlewares');
+// not needed here but this makes pkg package it for mongodb
+const saslprep = require("saslprep");
+
+if(!checkDotEnv()) {
+    console.warn("[Warning] Couldn't find .env file which is used for configuration. Program may work incorrectly.")
+}
 
 // basic security
 app.use(helmet());
@@ -23,12 +29,12 @@ app.use(express.json());
 //sanitize input
 app.use(mongoSanitize());
 // session handling
-const sessionStore = new MongoStore({ mongoUrl: process.env.DB_URI, collection: 'sessions' });
+const sessionStore = new MongoStore({ mongoUrl: process.env.DB_URI || "mongodb://mongo:27017/dashboard", collection: 'sessions' });
 // TODO: set expiration date etc.
 app.use(session
     ({
         // name: "talkie.sid", // passport breaks if i set this
-        secret: process.env.SESSION_PASSWORD,
+        secret: process.env.SESSION_PASSWORD || "changeme",
         resave: false,
         saveUninitialized: false,
         store: sessionStore,
@@ -50,7 +56,7 @@ app.use(passport.session());
 app.use(express.static('public'));
 
 // helmet csp stuff
-const csp = require(`helmet-csp`);
+const csp = require('helmet-csp');
 
 
 // use hbs engine
@@ -96,7 +102,8 @@ app.use('/', router);
 app.use('/api', apiRouter);
 
 connectDb().then(async (connection) => {
-    app.listen(3000, _ => { console.log("App is listening on http://localhost:3000"); });
+    const port = process.env.PORT || 3000;
+    app.listen(port, _ => { console.log("App is listening on http://localhost:"+port); });
 });
 
 
