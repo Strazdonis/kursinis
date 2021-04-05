@@ -71,6 +71,30 @@ app.engine('hbs', handlebars({
     // defaultLayout: 'default',
 }));
 
+app.use(function (req, res, next) {
+    passport.deserializeUser(req.session.passport.user, (err, user) => {
+        try {
+            const splitName = user.fullname.split(" ");
+            const payload = {
+                perms: user.perms,
+                verified: user.verified,
+                username: user.username,
+                fullname: user.fullname,
+                firstname: splitName[0],
+                lastname: splitName[1],
+                city: user.city,
+            };
+            res.locals.session = payload;
+        } catch(err) {
+            console.error(err);
+        }
+
+        next();
+    });
+   
+    
+});
+
 // parse form data (for login/registration)
 app.use(express.urlencoded({
     extended: true,
