@@ -320,3 +320,19 @@ ul.no-bullets {
 .text-call{
   font-size: 12px;
 }
+.settings-edit{
+  text-decoration: none;
+  color: #8512FB
+}
+.settings-edit:hover{
+  opacity: 0.8;
+  color: #8512FB;
+}
+.input-style{
+	border-radius: 30px;
+	border: 1px solid #E9DEF4;
+}
+.input-style:focus{
+	box-shadow: none;
+  border: 1px solid #E9DEF4;
+}
