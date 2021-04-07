@@ -72,6 +72,10 @@ app.engine('hbs', handlebars({
 }));
 
 app.use(function (req, res, next) {
+    // if not logged in there's no user
+    if(!req.isAuthenticated()) {
+        return next();
+    }
     passport.deserializeUser(req.session.passport.user, (err, user) => {
         try {
             const splitName = user.fullname.split(" ");
