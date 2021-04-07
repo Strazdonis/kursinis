@@ -17,7 +17,7 @@ const { apiRouterMiddleware, httpLogger, generateNonce } = require('./utils/midd
 const saslprep = require("saslprep");
 
 if (!checkDotEnv()) {
-    console.warn("[Warning] Couldn't find .env file which is used for configuration. Program may work incorrectly.")
+    console.warn("[Warning] Couldn't find .env file which is used for configuration. Program may work incorrectly.");
 }
 
 
@@ -73,37 +73,35 @@ app.engine('hbs', handlebars({
 
 app.use(function (req, res, next) {
     // if not logged in there's no user
-    if(!req.isAuthenticated()) {
+    if (!req.isAuthenticated()) {
         return next();
     }
-    passport.deserializeUser(req.session.passport.user, (err, user) => {
-        try {
-            const splitName = user.fullname.split(" ");
-            const payload = {
-                perms: user.perms,
-                verified: user.verified,
-                username: user.username,
-                fullname: user.fullname,
-                firstname: splitName[0],
-                lastname: splitName[1],
-                city: user.city,
-                email: user.email,
-            };
-            res.locals.session = payload;
-        } catch(err) {
-            console.error(err);
-        }
 
-        next();
-    });
-   
-    
+    try {
+        const user = req.user;
+        const splitName = user.fullname.split(" ");
+        const payload = {
+            perms: user.perms,
+            verified: user.verified,
+            username: user.username,
+            fullname: user.fullname,
+            firstname: splitName[0],
+            lastname: splitName[1],
+            city: user.city,
+            email: user.email,
+        };
+        res.locals.session = payload;
+    } catch (error) {
+        console.error(error);
+    }
+
+    next();
 });
 
 // parse form data (for login/registration)
 app.use(express.urlencoded({
     extended: true,
-}))
+}));
 
 // handle content securicy policy to only allow required files to be loaded
 app.use(generateNonce);

@@ -10,16 +10,23 @@ const validateEmail = (email) => {
 
 /**
  * main user object
- * username: Strazdonis
- * password: hashed
- * salt: salt user for password hashing
- * email: edvinasstrazdonis@gmail.com
- * verified: wether email was verified or not
- * fullname: Edvinas Strazdonis
+ * displayname: Strazdonis
+ * firstname: Edvinas
+ * lastname: Strazdonis
+ * fullname: Edvinas Strazdonis (firstname + lastname)
  * city: Vilnius (detect by IP GEOlocation?)
+ * email: edvinasstrazdonis@gmail.com
+ * perms: normal/admin - user permission level
+ * verified: true/false - whether email was verified or not
+ * code: code for email verification
+ * forgotcode: code for forgot password validation
+ * password: hashed
+ * salt: salt used for password hashing
  */
 const UserSchema = new Schema({
-    fullname: { type: String, required: true },
+    displayname: { type: String, },
+    firstname: { type: String, required: true, },
+    lastname: { type: String, required: true },
     city: { type: String }, //for weather
     email: {
         type: String,
@@ -32,8 +39,19 @@ const UserSchema = new Schema({
     },
     perms: { type: String, enum: ["normal", "admin"], default: "normal" },
     code: { type: String },
+    forgotcode: { type: String },
     verified: { type: Boolean, default: false }
 });
+
+UserSchema.virtual('fullName').
+    get(function () { return `${this.firstname} ${this.lastname}`; }).
+    set(function (v) {
+        // `v` is the value being set, so use the value to set
+        // `firstName` and `lastName`.
+        const firstname = v.substring(0, v.indexOf(' '));
+        const lastname = v.substring(v.indexOf(' ') + 1);
+        this.set({ firstname, lastname });
+    });
 
 UserSchema.plugin(passportLocalMongoose);
 
