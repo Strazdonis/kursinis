@@ -87,6 +87,7 @@ app.use(function (req, res, next) {
                 firstname: splitName[0],
                 lastname: splitName[1],
                 city: user.city,
+                email: user.email,
             };
             res.locals.session = payload;
         } catch(err) {
