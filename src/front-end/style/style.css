@@ -349,3 +349,9 @@ ul.no-bullets {
   opacity: 0.7;
   color: white;
 }
+.country-selection{
+  border-radius: 30px;
+  border: 2px solid black;
+  padding: 5px;
+  width: 100%;
+}
