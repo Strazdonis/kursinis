@@ -12,7 +12,7 @@ module.exports = function (router) {
         } else if (typeof track == "string") {
             track = track.toLowerCase();
         } else {
-            logger.verbose("unexpected track type in crypto.js:", typeof track);
+            logger.verbose(`unexpected track type in crypto.js: ${typeof track}`);
             return res.status(400).json({ error: "bad request" });
         }
 

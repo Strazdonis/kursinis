@@ -122,7 +122,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 sessionStore.on('set', data => {
-    logger.verbose("saved session", data);
+    logger.verbose(`saved session: ${data}`);
 });
 
 const routePath = "./routes/";
