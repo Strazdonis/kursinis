@@ -1,6 +1,5 @@
-const mongoose = require('mongoose');
 const User = require("../../models/user");
-
+const logger = require("../../logger");
 function makeid(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -14,28 +13,31 @@ function makeid(length) {
 module.exports = (app) => {
     app.post('/register', (req, res) => {
         const data = req.body;
-        console.log(data);
-        if (typeof data.username !== "string" || typeof data.password !== "string") {
+        logger.verbose(data);
+        if (typeof data.email !== "string" || typeof data.password !== "string") {
 
             return res.status(400).json({ error: { message: "bad request" } });
         }
-        if (data.username.length < 6 || data.password.length < 6) {
-            return res.status(400).json({ error: { message: "username and password must be at least 6 characters long" } });
+        if (data.password.length < 6) {
+            return res.status(400).json({ error: { message: "password must be at least 6 characters long" } });
         }
         if (data.password != data.password2) {
             return res.status(400).json({ error: { message: "passwords dont match" } });
         }
         const code = makeid(16);
-        User.register({ username: data.username, email: data.email, code: code, fullname: `${data.firstname} ${data.lastname}`, city: data.city }, data.password, function (err, user) {
+        // TODO: remove username, login using email instead
+        User.register({ username: data.email, displayname: `${data.firstname} ${data.lastname}`, email: data.email, code: code, firstname: data.firstname, lastname: data.lastname }, data.password, function (err, user) {
             if (err) {
                 //TODO: return more reasonable messages & status codes, document them
                 if(err.driver && err.keyPattern.email) {
                     return res.status(500).json({ error: {message: "This email is already in use"} });
+                } else {
+                    logger.warn(`Couldn't find an appropriate error handler for ${err.keyPattern}, ${err}`);
                 }
                 return res.status(500).json({ error: err });
             }
-            console.log(user);
-            return res.send(200, { success: true, message: "registered, you can now login" });
+            logger.verbose(user);
+            return res.status(200).json({ success: true, message: "registered, you can now login" });
         });
     });
 };

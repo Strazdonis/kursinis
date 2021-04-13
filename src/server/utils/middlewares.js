@@ -1,6 +1,6 @@
 const morgan = require('morgan');
 const uuid = require('uuid');
-
+const logger = require("../logger/");
 module.exports = {
     apiRouterMiddleware: (function (req, res, next) {
         // API-only middleware, check if logged in etc.
@@ -18,9 +18,8 @@ module.exports = {
         res.locals.nonce = uuid.v4().replace(rhyphen, ``);
         next();
     },
-    httpLogger: morgan(
-        ':method :url :status :res[content-length] - :response-time ms',
-    ),
+    
+    httpLogger: morgan(":method :url :status :res[content-length] - :response-time ms", { stream: { write: message => logger.verbose(message.trim()) }}),
     auth: {
         required: (req, res, next) => {
             if (req.isAuthenticated()) {

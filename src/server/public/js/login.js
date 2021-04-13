@@ -12,13 +12,12 @@ form.addEventListener('submit', async ev => {
         body: JSON.stringify(data)
     });
     (response.json()).then(data => {
-       // console.log(data);
         if(data.error) {
             alert(data.error.message);
         } else if(data.success) {
-            window.location.replace("/")
+            window.location.replace("/");
         } else {
-            alert("Something went wrong, please try again")
+            alert("Something went wrong, please try again");
         }
     });
 });

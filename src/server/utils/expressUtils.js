@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const logger = require("../logger");
+var start = process.hrtime();
 module.exports = {
 
     getNonce: function (req, res) {
@@ -52,13 +54,21 @@ module.exports = {
             const route = routePath + file;
             require(path.join("../", route))(router);
             //print nicely to console to see all routes
-            console.log(`[${dir}]${dir==="API"?"  ":""} ${dir === "API" ? "/api/" : "/"}${file}`);
+            logger.info(`[${dir}]${dir==="API"?"  ":""} ${dir === "API" ? "/api/" : "/"}${file}`);
         });
     },
 
     checkDotEnv: () => {
         return process.env.ENV_EXISTS;
-    }
+    },
+
+    // based on https://stackoverflow.com/questions/10617070/how-do-i-measure-the-execution-time-of-javascript-code-with-callbacks
+    elapsedTime: (note) => {
+        var precision = 3; // 3 decimal places
+        var elapsed = process.hrtime(start)[1] / 1000000; // divide by a million to get nano to milli
+        logger.verbose(process.hrtime(start)[0] + " s, " + elapsed.toFixed(precision) + " ms - " + note); // print message + time
+        start = process.hrtime(); // reset the timer
+    },
 
 
 };

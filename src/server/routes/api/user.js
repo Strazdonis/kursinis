@@ -1,4 +1,5 @@
 const User = require('../../models/user');
+const logger = require("../../logger");
 module.exports = (app) => {
     /**
      * fetch a user by ID
@@ -13,32 +14,29 @@ module.exports = (app) => {
     /**
      * patch (update only given fields) logged in user
      * possible fields - { username, fullname, city }
-     * @returns null
+     * @returns object with a message property
      */
     app.patch('/user/', (req, res) => {
         const uid = req.user._id;
         User.findById(uid, function (err, user) {
             if (err) {
-                console.error(`PATCH /api/user/ finding user ${uid} threw an error`, err);
+                logger.error(`PATCH /api/user/ finding user ${uid} threw an error ${err.stack}`);
                 return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
             }
 
             if (!user) {
-                console.error(`/api/user/ couldn't find user ${uid} in DB`, err);
+                logger.error(`/api/user/ couldn't find user ${uid} in DB ${err.stack}`);
                 return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
             }
 
-            user.username = req.body.username || user.username;
-            user.description = req.body.description || user.description;
-            user.manufacturer = req.body.manufacturer || user.manufacturer;
-            user.photoUrls = req.body.photoUrls || user.photoUrls;
+            user.displayname = req.body.displayname || user.displayname;
             user.save(function (err) {
                 if (err) {
-                    console.error(`/api/user/ couldn't save user ${uid} in DB`, 'USER:', user, 'ERROR:', err);
+                    logger.error(`/api/user/ couldn't save user ${uid} in DB.\nUSER: ${user}\nERROR: ${err.stack}`);
                     return res.status(400).send({ error: err, message: "failed saving updated data in database" });
                 }
 
-                res.status(202).json({ message: 'Phone updated!', user });
+                res.status(202).json({ message: 'User updated!' });
             });
 
         });

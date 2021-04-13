@@ -1,5 +1,6 @@
 const Crypto = require('../../models/crypto');
 const { getManyCryptoData } = require('../../utils/crypto');
+const logger = require("../../logger");
 module.exports = function (router) {
     router.post('/crypto', (req, res) => {
         const body = req.body;
@@ -11,7 +12,7 @@ module.exports = function (router) {
         } else if (typeof track == "string") {
             track = track.toLowerCase();
         } else {
-            console.log(typeof track);
+            logger.verbose("unexpected track type in crypto.js:", typeof track);
             return res.status(400).json({ error: "bad request" });
         }
 

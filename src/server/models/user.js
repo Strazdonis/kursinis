@@ -27,7 +27,8 @@ const UserSchema = new Schema({
     displayname: { type: String, },
     firstname: { type: String, required: true, },
     lastname: { type: String, required: true },
-    city: { type: String }, //for weather
+    city: { type: String, trim: true, }, //for weather
+    country: { type: String, trim: true, },
     email: {
         type: String,
         trim: true,
@@ -43,7 +44,7 @@ const UserSchema = new Schema({
     verified: { type: Boolean, default: false }
 });
 
-UserSchema.virtual('fullName').
+UserSchema.virtual('fullname').
     get(function () { return `${this.firstname} ${this.lastname}`; }).
     set(function (v) {
         // `v` is the value being set, so use the value to set

@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 const User = require("../../models/user");
-
+const logger = require("../../logger");
 module.exports = (app) => {
     app.post('/login', (req, res) => {
         const data = req.body;
-        console.log(data);
         var authenticate = User.authenticate();
         if (typeof data.username !== "string" || typeof data.password !== "string") {
             return res.status(400).json({ error: { message: "bad request" } });
@@ -19,7 +18,7 @@ module.exports = (app) => {
             }
             req.logIn(result, function (err) {
                 if (err) {
-                    console.error(err);
+                    logger.error(err.stack);
                     return res.status(500).json({ error: err });
                 }
                 const payload = {

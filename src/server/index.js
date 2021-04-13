@@ -1,15 +1,18 @@
+const logger = require("./logger");
 const express = require('express');
 require('dotenv').config();
 const app = express();
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const helmet = require('helmet');
-const { getDirectives, loadRoutes, checkDotEnv } = require('./utils/expressUtils');
-const { connectDb, models } = require('./models/index');
+const { getDirectives, loadRoutes, checkDotEnv, elapsedTime } = require('./utils/expressUtils');
+elapsedTime("START importing db");
+const { connectDb } = require('./models/index');
+elapsedTime("END importing db");
 const session = require('express-session');
 const mongoSanitize = require('express-mongo-sanitize');
 const MongoStore = require('connect-mongo');
-const User = models.User;
+const User = require("./models/user");
 const router = express.Router();
 const apiRouter = express.Router();
 const { apiRouterMiddleware, httpLogger, generateNonce } = require('./utils/middlewares');
@@ -17,10 +20,8 @@ const { apiRouterMiddleware, httpLogger, generateNonce } = require('./utils/midd
 const saslprep = require("saslprep");
 
 if (!checkDotEnv()) {
-    console.warn("[Warning] Couldn't find .env file which is used for configuration. Program may work incorrectly.");
+    logger.warn("Couldn't find .env file which is used for configuration. Program may work incorrectly.");
 }
-
-
 
 // basic security
 app.use(helmet());
@@ -32,7 +33,9 @@ app.use(express.json());
 //sanitize input
 app.use(mongoSanitize());
 // session handling
+elapsedTime("START connecting session store");
 const sessionStore = new MongoStore({ mongoUrl: process.env.DB_URI || "mongodb://mongo:27017/dashboard", collection: 'sessions' });
+elapsedTime("END connecting session store");
 // TODO: set expiration date etc.
 app.use(session
     ({
@@ -92,7 +95,7 @@ app.use(function (req, res, next) {
         };
         res.locals.session = payload;
     } catch (error) {
-        console.error(error);
+        logger.error(error.stack);
     }
 
     next();
@@ -119,26 +122,25 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 sessionStore.on('set', data => {
-    console.log("saved session", data);
+    logger.verbose("saved session", data);
 });
 
 const routePath = "./routes/";
 
 // dynamically load routes from /routes
 loadRoutes(routePath, router, 'Route');
-
 const apiRoutePath = "./routes/api/";
-
 apiRouter.use(apiRouterMiddleware);
 
 loadRoutes(apiRoutePath, apiRouter, 'API');
-
 app.use('/', router);
 app.use('/api', apiRouter);
 
+elapsedTime("START connectig to db");
 connectDb().then(async (connection) => {
+    elapsedTime("END connecting to DB");
     const port = process.env.PORT || 3000;
-    app.listen(port, _ => { console.log("App is listening on http://localhost:" + port); });
+    app.listen(port, _ => { logger.info("App is listening on http://localhost:" + port); });
 });
 
 
