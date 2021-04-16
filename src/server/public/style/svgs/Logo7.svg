@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="191.547" height="177.5" viewBox="0 0 191.547 177.5">
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Pacifico');</style>
+  </defs>
   <g id="Group_89" data-name="Group 89" transform="translate(-1191 2553)">
     <path id="Path_63" data-name="Path 63" d="M0,0H191.547V177.5H0Z" transform="translate(1191 -2553)" fill="#e9def4"/>
     <g id="Group_88" data-name="Group 88" transform="translate(1192.277 -2546.615)">

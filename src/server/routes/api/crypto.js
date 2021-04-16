@@ -19,10 +19,6 @@ module.exports = function (router) {
         // TODO: use a more mongoose routerroach by saving model?
         const user = req.user._id;
 
-        //TODO: investigate deprecation warning
-        //!"... when using the findAndModify helpers, 
-        //!the following are not routerlied: defaults, setters, validators, middleware"
-        //https://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
         Crypto.findOneAndUpdate({ user: user }, { crypto: track }, { upsert: true, new: true }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
