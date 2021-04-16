@@ -54,6 +54,10 @@ UserSchema.virtual('fullname').
         this.set({ firstname, lastname });
     });
 
-UserSchema.plugin(passportLocalMongoose);
+    // https://github.com/saintedlama/passport-local-mongoose#options
+UserSchema.plugin(passportLocalMongoose, {
+    usernameField: 'email',
+    //usernameQueryFields: 'email',
+});
 
 module.exports = mongoose.model('User', UserSchema);
