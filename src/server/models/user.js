@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
-//TODO: validation,hashing,everything (handle with passport?)
 
 const validateEmail = (email) => {
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -56,8 +55,6 @@ UserSchema.virtual('fullname').
 
     // https://github.com/saintedlama/passport-local-mongoose#options
 UserSchema.plugin(passportLocalMongoose, {
-    usernameField: 'email',
-    //usernameQueryFields: 'email',
 });
 
 module.exports = mongoose.model('User', UserSchema);
