@@ -8,6 +8,45 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script>
+        function validateForm() {
+        var passwd = document.forms["myForm"]["passwd"].value;
+        var rpasswd = document.forms["myForm"]["rpasswd"].value;
+        var email = document.forms["myForm"]["email"].value;
+        var fname = document.forms["myForm"]["fname"].value;
+        var lname = document.forms["myForm"]["lname"].value;
+        var regex=/^[a-zA-Z]+$/;
+        if(passwd != rpasswd ){
+            alert("Passwords doesn't match");
+            return false;
+        }
+        if (email == "") {
+            alert("E-mail must be filled");
+            return false;
+      }
+      if (fname == "") {
+            alert("First Name");
+            return false;
+      }
+      if (lname == "") {
+            alert("Last Name");
+            return false;
+      }
+      if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)){
+            return true;
+            }
+            else{
+                alert("You have entered an invalid email address!")
+            return false;
+            }
+     
+            
+            
+            
+
+
+    }
+    </script>
 </head>
 <body>
 	<div class="container ">
@@ -37,40 +76,16 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-sm-8 mb-3 mt-2 ">
-                        <form>
-                            <input class="form-control input-style" type="text" placeholder="E-mail">
-                            <input class="form-control input-style" type="text" placeholder="Name">
-                            <input class="form-control input-style" type="text" placeholder="Surname">
-                            <input class="form-control input-style" type="password" placeholder="Password">
-                            <input class="form-control input-style" type="password" placeholder="Repeat password">
+                        <form class="text-center" onsubmit="return validateForm()" name="myForm">
+                            <input class="form-control input-style mb-3" type="text" placeholder="E-mail" name="email">
+                            <input class="form-control input-style mb-3" type="text" placeholder="Name" name='fname'>
+                            <input class="form-control input-style mb-3" type="text" placeholder="Last Name" name='lname'>
+                            <input class="form-control input-style mb-3" type="password" placeholder="Password" name='passwd'>
+                            <input class="form-control input-style mb-3" type="password" placeholder="Repeat password" name='rpasswd'>
+                            <input class="sign-button " type="submit" value="Submit">
                         </form>
                         
                     </div>
-                </div>
-                <div class="row justify-content-center">
-                        <div class="col-sm-8 mb-3 mt-2 ">
-                            >
-                        </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-sm-8 mb-3 mt-2 ">
-                        
-                    </div>
-                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-sm-8 mb-3 mt-2">
-                       
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-sm-8 mt-2">
-                        
-                    </div>
-                </div>
-                <div class="row justify-content-center mt-5 mb-5">
-                    <div class="col-sm-3 text-center mb-5">
-                        <a href="#" class="bord sign-button">Register</a>
-                    </div>   
                 </div>
                 <div class="row justify-content-start ">
                     <div class="col-sm-5 mt-5 mb-3"> 
