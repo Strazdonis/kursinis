@@ -16,13 +16,13 @@ module.exports = (app) => {
         logger.verbose(data);
         if (typeof data.email !== "string" || typeof data.password !== "string") {
 
-            return res.status(400).json({ error: { message: "bad request" } });
+            return res.status(400).json({ error: { message: "badReq" } });
         }
         if (data.password.length < 6) {
-            return res.status(400).json({ error: { message: "password must be at least 6 characters long" } });
+            return res.status(400).json({ error: { message: "passShort" } });
         }
         if (data.password != data.password2) {
-            return res.status(400).json({ error: { message: "passwords dont match" } });
+            return res.status(400).json({ error: { message: "passMismatch" } });
         }
         const code = makeid(16);
         // TODO: remove username, login using email instead
@@ -30,7 +30,7 @@ module.exports = (app) => {
             if (err) {
                 //TODO: return more reasonable messages & status codes, document them
                 if(err.driver && err.keyPattern.email) {
-                    return res.status(500).json({ error: {message: "This email is already in use"} });
+                    return res.status(500).json({ error: {message: "emailTaken"} });
                 } else {
                     logger.warn(`Couldn't find an appropriate error handler for ${err.keyPattern}, ${err}`);
                 }

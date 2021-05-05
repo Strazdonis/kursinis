@@ -14,7 +14,7 @@ module.exports = (app) => {
                 return res.status(500).json({ error: err });
             }
             if (!result) {
-                return res.status(401).json({ error: { message: "wrong username or password" } });
+                return res.status(401).json({ error: { message: "Email or password is incorrect." } });
             }
             req.logIn(result, function (err) {
                 if (err) {
@@ -29,11 +29,12 @@ module.exports = (app) => {
                     city: result.city,
                 };
 
+                console.log(req.isAuthenticated());
 
                 return res.json({
                     success: true,
                     message: 'Successful Login',
-                    // user: payload
+                //    user: payload
                 });
             });
         });

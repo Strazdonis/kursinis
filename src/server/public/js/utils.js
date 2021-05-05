@@ -21,3 +21,10 @@ export async function postData(url = '', data = {}) {
     });
     return response.json(); // parses JSON response into native JavaScript objects
 }
+
+export const showError = (message, messageEl, ...inputs) => {
+    messageEl.innerText = message;
+    inputs.forEach(input => {
+        input.classList.add("is-invalid");
+    });
+};

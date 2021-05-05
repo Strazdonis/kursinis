@@ -24,8 +24,8 @@ const validateEmail = (email) => {
  */
 const UserSchema = new Schema({
     displayname: { type: String, },
-    firstname: { type: String, required: true, },
-    lastname: { type: String, required: true },
+    firstname: { type: String, required: "First name is required", },
+    lastname: { type: String, required: "Last name is required" },
     city: { type: String, trim: true, }, //for weather
     country: { type: String, trim: true, },
     email: {

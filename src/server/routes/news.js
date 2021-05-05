@@ -1,6 +1,6 @@
 const { auth } = require('../utils/middlewares');
 module.exports = (app) => {
-    app.get('/notes', auth.required, (req, res) => {
-        res.render('notes', { layout: 'index' });
+    app.get('/news', auth.required, (req, res) => {
+        res.render('news', { layout: 'index' });
     });
 };

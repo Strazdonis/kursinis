@@ -39,7 +39,6 @@ elapsedTime("END connecting session store");
 // TODO: set expiration date etc.
 app.use(session
     ({
-        // name: "talkie.sid", // passport breaks if i set this
         secret: process.env.SESSION_PASSWORD || "changeme",
         resave: false,
         saveUninitialized: false,
@@ -57,6 +56,10 @@ app.use(session
 // authorization handling
 app.use(passport.initialize());
 app.use(passport.session());
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // serve static files in / from public/
 app.use(express.static('public'));
@@ -117,10 +120,6 @@ app.use(csp({
 // https://mherman.org/blog/user-authentication-with-passport-dot-js/
 passport.use(new LocalStrategy(User.authenticate()));
 
-// use static serialize and deserialize of model for passport session support
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 sessionStore.on('set', data => {
     logger.verbose(`saved session: ${data}`);
 });
@@ -142,7 +141,3 @@ connectDb().then(async (connection) => {
     const port = process.env.PORT || 3000;
     app.listen(port, _ => { logger.info("App is listening on http://localhost:" + port); });
 });
-
-
-
-

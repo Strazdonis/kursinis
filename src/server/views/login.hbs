@@ -5,14 +5,15 @@
         </div>
     </div>
     <form method="POST" action="/api/login">
+        <div class="text-danger error-msg-container"><p class="error-msg-text" id="err_msg"></p></div>
         <div class="row justify-content-center">
-                <div class="col-sm-8 mb-3 mt-2 ">
-                    <input class="form-control input-style" name="username" type="text" placeholder="E-mail">
-                </div>
+            <div class="col-sm-8 mb-3 mt-2 ">
+                <input class="form-control input-style" id="input-user" name="username" type="text" placeholder="E-mail">
+            </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-sm-8 ">
-                <input class="form-control input-style" name="password" type="password" placeholder="Password">
+                <input class="form-control input-style" id="input-pass" name="password" type="password" placeholder="Password">
             </div>
         </div>
         <div class="row justify-content-center mt-2">

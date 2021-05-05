@@ -22,6 +22,7 @@ module.exports = {
     httpLogger: morgan(":method :url :status :res[content-length] - :response-time ms", { stream: { write: message => logger.verbose(message.trim()) }}),
     auth: {
         required: (req, res, next) => {
+            console.log(req.isAuthenticated());
             if (req.isAuthenticated()) {
                 return next();
             }

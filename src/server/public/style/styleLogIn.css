@@ -1,71 +1,76 @@
-body{
-	background-color: #C996FD;
-	padding: 50px;
-	font-family: "Montserrat";
+body {
+  background-color: #c996fd;
+  padding: 50px;
+  font-family: "Montserrat";
 }
-.bord{
-	border: 2px solid black;
+.bord {
+  border: 2px solid black;
 }
-.right-style{
-	background-color: #E9DEF4;
-	border-bottom-left-radius: 60px;
-	border-top-left-radius: 60px;
+.right-style {
+  background-color: #e9def4;
+  border-bottom-left-radius: 60px;
+  border-top-left-radius: 60px;
 }
-.left-style{
-	background-color: #FCFAFF;
-	border-bottom-right-radius: 60px;
-	border-top-right-radius: 60px;
+.left-style {
+  background-color: #fcfaff;
+  border-bottom-right-radius: 60px;
+  border-top-right-radius: 60px;
 }
-.slogan{
-	color:#9E85B7;
-	font-family: "Pacifico";
+.slogan {
+  color: #9e85b7;
+  font-family: "Pacifico";
 }
-.slogan2{
-	color:#9E85B7;
-	font-weight: bold;
+.slogan2 {
+  color: #9e85b7;
+  font-weight: bold;
 }
-.text-lighter{
-	color:#C996FD;
+.text-lighter {
+  color: #c996fd;
 }
-.bold{
-	font-weight: 500;
+.bold {
+  font-weight: 500;
 }
-.input-style{
-	border-radius: 30px;
-	background-color:#E9DEF4;
-	border: 1px solid #E9DEF4;
+.input-style {
+  border-radius: 30px;
+  background-color: #e9def4;
+  border: 1px solid #e9def4;
 }
-.input-style:focus{
-	box-shadow: 0 0 0 .25rem rgba(201, 150, 253, 0.5);
-	border: #E9DEF4;
+.input-style:focus {
+  box-shadow: 0 0 0 0.25rem rgba(201, 150, 253, 0.5);
+  border: #e9def4;
 }
-.forgot-link{
-	text-decoration: none;
-	color:grey;
-	font-size: 15px;
+.forgot-link {
+  text-decoration: none;
+  color: grey;
+  font-size: 15px;
 }
-.forgot-link:hover{
-	color:black;
+.forgot-link:hover {
+  color: black;
 }
-.create-link{
-	text-decoration: none;
-	color:black;
-	font-size: 15px;
+.create-link {
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
 }
-.create-link:hover{
-	color: grey;
+.create-link:hover {
+  color: grey;
 }
-.sign-button{
-	text-decoration: none;
-	color: white;
-	background-color: #C996FD;
-	font-size: 15px;
-	padding: 15px;
-	padding-left: 20px;
-	padding-right: 20px;
-	border-radius: 30px;
-	border: none;
+.sign-button {
+  text-decoration: none;
+  color: white;
+  background-color: #c996fd;
+  font-size: 15px;
+  padding: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 30px;
+  border: none;
 }
-.sign-button:hover{
-	color:black;
+.sign-button:hover {
+  color: black;
+}
+
+.error-msg-container {
+  min-height: 45px;
+  text-align: center;
 }
