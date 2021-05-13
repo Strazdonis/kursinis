@@ -1,8 +1,8 @@
-const Todo = require('../../models/todo');
+const Notes = require('../../models/notes');
 module.exports = (app) => {
-    app.get('/todo', (req, res) => {
+    app.get('/notes', (req, res) => {
         const user = req.user._id;
-        Todo.find({ user: user }, (err, doc) => {
+        Notes.find({ user: user }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -10,18 +10,18 @@ module.exports = (app) => {
         });
     });
 
-    app.post('/todo', (req, res) => {
+    app.post('/notes', (req, res) => {
         const body = req.body;
-        const task = body.task;
+        const text = body.note;
         const user = req.user._id;
 
         //TODO: validation?
-        const todo = new Todo();
-        todo.user = user;
-        todo.task = task;
-        todo.state = "active";
+        const note = new Notes();
+        note.user = user;
+        note.text = text;
+        note.state = "active";
 
-        todo.save((err, doc) => {
+        note.save((err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -29,11 +29,11 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/todo', (req, res) => {
+    app.delete('/notes', (req, res) => {
         const body = req.body;
         const user = req.user._id;
         const id = body.id;
-        Todo.deleteOne({ user, id }, (err, doc) => {
+        Notes.deleteOne({ user, id }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -41,22 +41,19 @@ module.exports = (app) => {
         });
     });
 
-    //update it's status or text
-    app.patch('/todo', (req, res) => {
+    //update it's text
+    app.patch('/notes', (req, res) => {
         const body = req.body;
         const user = req.user._id;
         const id = body.id;
         const data = {};
-        if (body.task) {
-            data.task = body.task;
-        }
-        if (body.status) {
-            data.status = body.status;
+        if (body.text) {
+            data.text = body.text;
         }
         if (Object.keys(data).length === 0) {
             return res.send(400, { error: "nothing to update" });
         }
-        Todo.updateOne({ id }, { $set: data }, (err, doc) => {
+        Notes.updateOne({ id }, { $set: data }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
