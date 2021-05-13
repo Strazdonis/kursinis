@@ -33,28 +33,52 @@ document.getElementById("create-note").addEventListener("click", createEvent => 
 
     });
     saveBtn.addEventListener('click', async saveEvent => {
-        const parent = saveEvent.target.offsetParent;
-        const title = parent.querySelector("#note-title").innerText;
-        const text = parent.querySelector("#note-text").innerText;
-        const data = await postData("/api/notes", {title, text});
-        console.log(data);
+        saveProcess(saveEvent);
     });
     delBtn.addEventListener('click', async deleteEvent => {
-        console.log(deleteEvent);
-        const parent = deleteEvent.target.offsetParent;
-        if(parent.id != 'note-example') {
-            const data = await postData("/api/notes", {id: parent.id}, 'DELETE');
-            console.log(data);
-        }
-        parent.remove();
+        deleteProcess(deleteEvent);
     });
 });
 
 fetch("/api/notes").then(res => res.json()).then(result => {
     console.log(result);
-    const notes = result.result;
+    const notes = result.result.reverse();
     notes.forEach(note => {
         const el = createNoteElement(note.title, note.text, note.date, note._id);
         container.appendChild(el);
+        el.querySelector("#btn-delete").addEventListener('click', async deleteEvent => {
+            deleteProcess(deleteEvent);
+        });
+        el.querySelector("#btn-save").addEventListener('click', async saveEvent => {
+            saveProcess(saveEvent);
+        })
     });
 });
+
+const deleteProcess = async (event) => {
+    console.log(event);
+    const parent = event.target.offsetParent;
+    console.log(parent, parent.id)
+    if (parent.id != 'note-example') {
+        const data = await postData("/api/notes", { id: parent.id }, 'DELETE');
+        console.log(data);
+    }
+    parent.remove();
+}
+
+const saveProcess = async (event) => {
+    const parent = event.target.offsetParent;
+    const title = parent.querySelector("#note-title").innerText;
+    const text = parent.querySelector("#note-text").innerText;
+    if(parent.id != 'note-example') {
+        const data = await postData("/api/notes", { id: parent.id, title, text }, 'PATCH');
+        console.log(data);
+    } else {
+        const data = await postData("/api/notes", { title, text });
+        const id = data.result._id;
+        parent.id = id;
+    }
+
+    
+
+}

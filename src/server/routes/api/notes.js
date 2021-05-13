@@ -34,7 +34,9 @@ module.exports = (app) => {
         const body = req.body;
         const user = req.user._id;
         const id = body.id;
-        Notes.deleteOne({ user, id }, (err, doc) => {
+        console.log(id);
+        Notes.deleteOne({ _id: id }, (err, doc) => {
+            console.log(doc)
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -54,10 +56,11 @@ module.exports = (app) => {
         if(body.title) {
             data.title = body.title;
         }
+        console.log(data, id)
         if (Object.keys(data).length === 0) {
             return res.send(400, { error: "nothing to update" });
         }
-        Notes.updateOne({ id }, { $set: data }, (err, doc) => {
+        Notes.updateOne({ _id: id }, { $set: data }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }

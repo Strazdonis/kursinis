@@ -33,7 +33,7 @@ module.exports = (app) => {
         const body = req.body;
         const user = req.user._id;
         const id = body.id;
-        Todo.deleteOne({ user, id }, (err, doc) => {
+        Todo.deleteOne({ _id: id }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
