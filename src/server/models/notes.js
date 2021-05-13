@@ -8,7 +8,9 @@ const Schema = mongoose.Schema;
  */
 const NotesSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true },
+    title: { type: String, required: true, trim: true },
     text: { type: String, required: true, trim: true },
+    date: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Notes', NotesSchema);

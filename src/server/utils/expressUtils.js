@@ -12,6 +12,7 @@ module.exports = {
         const self = `'self'`;
         const unsafeInline = `'unsafe-inline'`;
         const scripts = [
+
         ];
         const styles = [
             'https://ka-f.fontawesome.com/',

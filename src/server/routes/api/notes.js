@@ -12,14 +12,15 @@ module.exports = (app) => {
 
     app.post('/notes', (req, res) => {
         const body = req.body;
-        const text = body.note;
+        const text = body.text;
+        const title = body.title;
         const user = req.user._id;
 
         //TODO: validation?
         const note = new Notes();
         note.user = user;
         note.text = text;
-        note.state = "active";
+        note.title = title;
 
         note.save((err, doc) => {
             if (err) {
@@ -49,6 +50,9 @@ module.exports = (app) => {
         const data = {};
         if (body.text) {
             data.text = body.text;
+        }
+        if(body.title) {
+            data.title = body.title;
         }
         if (Object.keys(data).length === 0) {
             return res.send(400, { error: "nothing to update" });

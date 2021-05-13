@@ -1,6 +1,14 @@
 <div class="row mb-2">
-    <div class="col-sm-12">
-        <h1>Notes</h1>
-        <hr>
-    </div>
+  <div class="col-sm-12">
+    <h1>Notes</h1>
+    <button class="d-inline btn btn-md btn-success" id="create-note">Create note</button>
+    <hr />
+  </div>
 </div>
+<!-- needs to be in one line to remove whitespace https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Whitespace -->
+<div class="row"><div class="col-lg-12" id="note-container"></div>
+</div>
+
+
+<script src="js/tinyAgo.min.js"></script>
+<script type="module" src="js/notes.js"></script>
