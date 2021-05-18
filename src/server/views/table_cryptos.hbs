@@ -1,0 +1,65 @@
+{{#> layouts/admin title="Cryptos table" }}
+  {{#*inline "content-block"}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Cryptos table</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item"><a href="#">Tables</a></li>
+          <li class="breadcrumb-item active">Cryptos</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table id="table" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Crypto list</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <th>User</th>
+                  <th>Crypto list</th>
+                  <th>Actions</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+  {{/inline}}
+
+
+  {{#*inline "scripts-block"}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.24/date-1.0.3/r-2.2.7/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.24/date-1.0.3/r-2.2.7/datatables.min.js"></script>
+    <script type="module" src="/js/crypto_table.js"></script>
+  {{/inline}}
+{{/layouts/admin}}

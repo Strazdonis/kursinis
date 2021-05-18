@@ -1,12 +1,13 @@
 const User = require('../../models/user');
 const logger = require("../../logger");
+const { auth } = require('../../utils/middlewares');
 module.exports = (app) => {
     /**
      * fetch a user by ID
      * ID must be passed by URL - /api/user/606105d8e86aa41d20f327cb
      * @returns { id, fullname }
      */
-    app.get('/user/:id', (req, res) => {
+    app.get('/user/:id', auth.moderator, (req, res) => {
         User.findById(req.params.id, function (err, user) {
             if (err) {
                 logger.error(`GET /api/user/ finding user ${uid} threw an error ${err.stack}`);
@@ -21,9 +22,22 @@ module.exports = (app) => {
         });
     });
 
+    app.delete('/user/', (req, res) => {
+        const body = req.body;
+        const uid = body.id;
+        User.deleteOne({ _id: uid }, (err, doc) => {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+            return res.json({ message: "success", result: doc });
+        });
+    });
 
-    app.put('/user/:id', (req, res) => {
-        const uid = req.params.id;
+
+
+    app.put('/user/', auth.admin, (req, res) => {
+        const body = req.body;
+        const uid = body.id;
         User.findById(uid, function (err, user) {
             if (err) {
                 logger.error(`PUT /api/user/ finding user ${uid} threw an error ${err.stack}`);
@@ -35,7 +49,7 @@ module.exports = (app) => {
                 return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
             }
 
-            const body = req.body;
+            
             user.email = body.email;
             user.username = body.username;
             user.displayname = body.displayname;
@@ -62,7 +76,7 @@ module.exports = (app) => {
      * possible fields - { username, fullname, city }
      * @returns object with a message property
      */
-    app.patch('/user/', (req, res) => {
+    app.patch('/user/', auth.admin, (req, res) => {
         const uid = req.user._id;
         User.findById(uid, function (err, user) {
             if (err) {

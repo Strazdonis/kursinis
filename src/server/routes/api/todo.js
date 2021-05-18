@@ -1,4 +1,5 @@
 const Todo = require('../../models/todo');
+const { auth } = require('../../utils/middlewares');
 module.exports = (app) => {
     app.get('/todo', (req, res) => {
         const user = req.user._id;
@@ -7,6 +8,35 @@ module.exports = (app) => {
                 return res.status(500).json({ error: err });
             }
             return res.json({ message: "success", result: doc });
+        });
+    });
+
+    app.get('/todo/all', auth.moderator, (req, res) => {
+        Todo.find({}, (err, doc) => {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+            return res.json({ message: "success", result: doc });
+        });
+    });
+
+    app.put('/todo/:anything', (req, res) => {
+        const body = req.body;
+        const user = body.user;
+        const id = body.id;
+        const data = {};
+
+        data.task = body.task;
+
+        data.state = body.state;
+        if (Object.keys(data).length === 0) {
+            return res.send(400, { error: "nothing to update" });
+        }
+        Todo.updateOne({ user, _id: id }, { $set: data }, (err, doc) => {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 
@@ -33,7 +63,7 @@ module.exports = (app) => {
         const body = req.body;
         const user = req.user._id;
         const id = body.id;
-        Todo.deleteOne({ _id: id }, (err, doc) => {
+        Todo.deleteOne({ user, _id: id }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -50,13 +80,13 @@ module.exports = (app) => {
         if (body.task) {
             data.task = body.task;
         }
-        if (body.status) {
-            data.status = body.status;
+        if (body.state) {
+            data.state = body.state;
         }
         if (Object.keys(data).length === 0) {
             return res.send(400, { error: "nothing to update" });
         }
-        Todo.updateOne({ id }, { $set: data }, (err, doc) => {
+        Todo.updateOne({ user, _id: id }, { $set: data }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }

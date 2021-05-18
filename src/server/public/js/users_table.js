@@ -4,8 +4,8 @@ const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
 };
 const updateUser = async (data, id) => {
-    const response = await postData(`/api/user/${id}`, data, "PUT");
-    if(response.success) {
+    const response = await postData(`/api/user/`, data, "PUT");
+    if (response.success) {
         const index = users.findIndex((user) => user._id === id);
         console.log(index, users[index], response.user);
         users[index] = response.user;
@@ -13,8 +13,21 @@ const updateUser = async (data, id) => {
 
     return response;
 };
+const deleteUser = async (id) => {
+    const response = await postData(`/api/user/`, { id: id }, "DELETE");
+    if (response.success) {
+        const index = users.findIndex((user) => user._id === id);
+        users = users.splice(index, 1);
+        console.log(index, users[index], users);
+        users[index] = response.user;
+        console.log(users);
+    }
+
+    return response;
+};
+
 let users;
-const generateViewButton = (id) => {
+const generateViewButton = (id, element) => {
     const viewButton = document.createElement('button');
     viewButton.innerHTML = `<i class="fas fa-external-link-alt"></i>`;
     viewButton.classList.add("btn", "btn-primary", "btn-md", "mr-3");
@@ -78,6 +91,7 @@ const generateViewButton = (id) => {
             focusConfirm: false,
             preConfirm: () => {
                 return {
+                    id: id,
                     email: document.getElementById('swal-email').value,
                     username: document.getElementById('swal-username').value,
                     displayname: document.getElementById('swal-displayname').value,
@@ -87,7 +101,7 @@ const generateViewButton = (id) => {
                     perms: document.getElementById('swal-perms').value,
                     code: document.getElementById('swal-code').value,
                     verified: document.getElementById('swal-verified-true').checked
-                }
+                };
             },
             showCancelButton: true,
             confirmButtonText:
@@ -96,23 +110,52 @@ const generateViewButton = (id) => {
         if (formValues) {
             const response = await updateUser(formValues, id);
             Swal.fire(response.message);
-           // Swal.fire(JSON.stringify(formValues));
+            if(response.success) {
+                const children = element.children;
+                const data = response.user;
+                children[0].innerText = data.username;
+                children[1].innerText = data.displayname;
+                children[2].innerText = data.fullname;
+                children[3].innerText = data.perms;
+                children[4].innerText = data.verified;
+            }
+            // Swal.fire(JSON.stringify(formValues));
         }
     });
     return viewButton;
 };
 
-const generateDeleteButton = (id) => {
-    const viewButton = document.createElement('button');
-    viewButton.innerHTML = `<i class="fas fa-trash"></i>`;
-    viewButton.classList.add("btn", "btn-danger", "btn-md");
-    viewButton.type = "button";
-    return viewButton;
-};
+const generateDeleteButton = (id, element) => {
+    const deleteButton = document.createElement('button');
+    deleteButton.innerHTML = `<i class="fas fa-trash"></i>`;
+    deleteButton.classList.add("btn", "btn-danger", "btn-md");
+    deleteButton.type = "button";
+    deleteButton.addEventListener('click', async (e) => {
+        const confirmation = await Swal.fire({
+            title: 'Are you sure you want to delete this user?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        });
+        if (!confirmation.isConfirmed) return;
+        const result = await deleteUser(id);
+        console.log(result);
+        Swal.fire(
+            'Deleted!',
+            'The user has been deleted.',
+            'success'
+        );
 
+    });
+    return deleteButton;
+};
 fetch("/api/users").then(res => res.json()).then(response => {
     users = response.result;
     const table = $("#table");
+
     users.forEach(user => {
         const html = `<td>${user.username}</td>
                 <td>${user.displayname}</td>
@@ -121,17 +164,17 @@ fetch("/api/users").then(res => res.json()).then(response => {
                 <td>${user.verified}</td>
                 <td class="action-buttons"></td>`;
         const element = document.createElement("tr");
+        element.id = `row_${user._id}`;
         element.innerHTML = html;
-        const viewBtn = generateViewButton(user._id);
-        const delBtn = generateDeleteButton(user._id);
+        const viewBtn = generateViewButton(user._id, element);
+        const delBtn = generateDeleteButton(user._id, element);
         const buttonsEl = element.getElementsByClassName("action-buttons")[0];
         buttonsEl.appendChild(viewBtn);
         buttonsEl.appendChild(delBtn);
 
-
         table.append(element);
     });
-    table.DataTable({
+    const datatable = table.DataTable({
         "paging": true,
         "lengthChange": false,
         "searching": false,

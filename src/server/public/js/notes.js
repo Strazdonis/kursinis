@@ -22,8 +22,8 @@ const createNoteElement = (title, text, date, id) => {
     el.style['margin-right'] = '2rem';
     el.innerHTML = NoteHtml.trim();
     return el;
+};
 
-}
 document.getElementById("create-note").addEventListener("click", createEvent => {
     const el = createNoteElement("Title", "Note text", "Just now", "note-example");
     container.prepend(el);
@@ -51,20 +51,20 @@ fetch("/api/notes").then(res => res.json()).then(result => {
         });
         el.querySelector("#btn-save").addEventListener('click', async saveEvent => {
             saveProcess(saveEvent);
-        })
+        });
     });
 });
 
 const deleteProcess = async (event) => {
     console.log(event);
     const parent = event.target.offsetParent;
-    console.log(parent, parent.id)
+    console.log(parent, parent.id);
     if (parent.id != 'note-example') {
         const data = await postData("/api/notes", { id: parent.id }, 'DELETE');
         console.log(data);
     }
     parent.remove();
-}
+};
 
 const saveProcess = async (event) => {
     const parent = event.target.offsetParent;
@@ -78,7 +78,4 @@ const saveProcess = async (event) => {
         const id = data.result._id;
         parent.id = id;
     }
-
-    
-
-}
+};
