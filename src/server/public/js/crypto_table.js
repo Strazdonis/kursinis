@@ -45,7 +45,6 @@ const generateViewButton = (id, cryptos, element) => {
             Swal.fire(response.message);
             if(response.success) {
                 const children = element.children;
-                const data = response.user;
                 children[1].innerText = formValues.cryptos.join(", ");
             }
             // Swal.fire(JSON.stringify(formValues));

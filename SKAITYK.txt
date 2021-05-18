@@ -3,7 +3,9 @@ Projektas: Internetinės aplikacijos kurimas - Dashboard (Talkie)
 
 1. "doc/Kursinis (latex)" yra VU latex šablonas.
 2. "doc/Kursinis (pdf)" yra kursinio darbo dokumentacija remiantis VU latex šablonu.
-3. "bin/" yra supakuotas src/ turinys į .exe ir linux vykdomuosius failus patogiam paleidimui.
+2. "doc/Kursinis (word) latest" yra naujausia kursinio darbo dokumentacija.
+3. "bin/" yra supakuotas src/ turinys į .exe ir linux vykdomuosius failus patogiam paleidimui. 
+	Vykdomąjį failą rekomenduojama perkelti į src/server/ direktoriją geriausiam veikimui.
 4. "src/" kataloge yra saugomas vartotojo sąsajos bei puslapio serverio kodas.
 5. Darbo paleidimui (nesinaudojant supakuotais executable failais) reikalingos priemonės:
 	1) Node.JS (v14.16+)
