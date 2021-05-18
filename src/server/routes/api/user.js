@@ -7,8 +7,54 @@ module.exports = (app) => {
      * @returns { id, fullname }
      */
     app.get('/user/:id', (req, res) => {
+        User.findById(req.params.id, function (err, user) {
+            if (err) {
+                logger.error(`GET /api/user/ finding user ${uid} threw an error ${err.stack}`);
+                return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
+            }
+
+            if (!user) {
+                logger.error(`/api/user/ couldn't find user ${uid} in DB ${err.stack}`);
+                return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
+            }
+            res.status(202).json({ success: true, result: user });
+        });
+    });
 
 
+    app.put('/user/:id', (req, res) => {
+        const uid = req.params.id;
+        User.findById(uid, function (err, user) {
+            if (err) {
+                logger.error(`PUT /api/user/ finding user ${uid} threw an error ${err.stack}`);
+                return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
+            }
+
+            if (!user) {
+                logger.error(`/api/user/ couldn't find user ${uid} in DB ${err.stack}`);
+                return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
+            }
+
+            const body = req.body;
+            user.email = body.email;
+            user.username = body.username;
+            user.displayname = body.displayname;
+            user.firstname = body.firstname;
+            user.lastname = body.lastname;
+            user.city = body.city;
+            user.code = body.code;
+            user.perms = body.perms;
+            user.verified = body.verified;
+
+            user.save(user, function (err) {
+                if (err) {
+                    logger.error(`/api/user/ couldn't update (save) user ${uid} in DB.\nUSER: ${user}\nERROR: ${err.stack}`);
+                    return res.status(400).send({ error: err, message: "failed saving updated data in database" });
+                }
+
+                res.status(202).json({ success: true, user, message: 'User updated!' });
+            });
+        });
     });
 
     /**

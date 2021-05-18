@@ -12,16 +12,21 @@ module.exports = {
         const self = `'self'`;
         const unsafeInline = `'unsafe-inline'`;
         const scripts = [
-
+            'https://cdn.datatables.net',
+            'http://cdn.jsdelivr.net/npm/sweetalert2@11',
+            'https://cdn.jsdelivr.net/npm/sweetalert2@11'
         ];
         const styles = [
             'https://ka-f.fontawesome.com/',
             'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css',
             'https://fonts.googleapis.com',
+            'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css',
+            'https://cdn.datatables.net/v/bs4-4.1.1/jq-3.3.1/dt-1.10.24/date-1.0.3/r-2.2.7/datatables.min.css',
 
         ];
         const fonts = [
             `https://fonts.gstatic.com/`,
+            'https://code.ionicframework.com/ionicons/2.0.1/fonts/'
         ];
         const frames = [
 

@@ -37,7 +37,7 @@ const UserSchema = new Schema({
         validate: [validateEmail, 'Please fill a valid email address'],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
-    perms: { type: String, enum: ["normal", "admin"], default: "normal" },
+    perms: { type: String, enum: ["normal", "moderator", "admin"], default: "normal" },
     code: { type: String },
     forgotcode: { type: String },
     verified: { type: Boolean, default: false }

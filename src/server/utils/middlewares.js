@@ -18,8 +18,8 @@ module.exports = {
         res.locals.nonce = uuid.v4().replace(rhyphen, ``);
         next();
     },
-    
-    httpLogger: morgan(":method :url :status :res[content-length] - :response-time ms", { stream: { write: message => logger.verbose(message.trim()) }}),
+
+    httpLogger: morgan(":method :url :status :res[content-length] - :response-time ms", { stream: { write: message => logger.verbose(message.trim()) } }),
     auth: {
         required: (req, res, next) => {
             console.log(req.isAuthenticated());
@@ -33,5 +33,26 @@ module.exports = {
         optional: (req, res, next) => {
             return next();
         },
+        moderator: (req, res, next) => {
+            if (!req.isAuthenticated()) {
+                return res.redirect('/login');
+            }
+            if (req.user.perms == "moderator" || req.user.perms == "admin") {
+                return next();
+            }
+            logger.verbose(`${req.user} tried accessing moderator only page`);
+            return res.redirect('/');
+
+        },
+        admin: (req, res, next) => {
+            if (!req.isAuthenticated()) {
+                return res.redirect('/login');
+            }
+            if (req.user.perms == "admin") {
+                return next();
+            }
+            logger.verbose(`${req.user} tried accessing admin only page`);
+            return res.redirect('/');
+        }
     }
 };

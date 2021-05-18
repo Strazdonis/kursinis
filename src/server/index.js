@@ -15,6 +15,7 @@ const MongoStore = require('connect-mongo');
 const User = require("./models/user");
 const router = express.Router();
 const apiRouter = express.Router();
+const adminRouter = express.Router();
 const { apiRouterMiddleware, httpLogger, generateNonce } = require('./utils/middlewares');
 // not needed here but this makes pkg package it for mongodb
 const saslprep = require("saslprep");
@@ -132,8 +133,13 @@ const apiRoutePath = "./routes/api/";
 apiRouter.use(apiRouterMiddleware);
 
 loadRoutes(apiRoutePath, apiRouter, 'API');
+
+const adminRoutePath = "./routes/admin/";
+loadRoutes(adminRoutePath, adminRouter, 'Admin');
+
 app.use('/', router);
 app.use('/api', apiRouter);
+app.use('/admin', adminRouter);
 
 elapsedTime("START connectig to db");
 connectDb().then(async (connection) => {
