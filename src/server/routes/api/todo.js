@@ -72,8 +72,10 @@ module.exports = (app) => {
 
     app.delete('/todo', (req, res) => {
         const body = req.body;
+        console.log(body);
         const user = req.user._id;
         const id = body.id;
+        console.log(user, id)
         Todo.deleteOne({ user, _id: id }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
@@ -94,6 +96,8 @@ module.exports = (app) => {
         if (body.state) {
             data.state = body.state;
         }
+        console.log(body);
+        console.log(user, id, data);
         if (Object.keys(data).length === 0) {
             return res.status(400).json({ error: "nothing to update" });
         }
