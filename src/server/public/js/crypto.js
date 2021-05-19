@@ -12,7 +12,7 @@ const generateCard = (data) => {
     const el = document.createElement("div");
     el.classList.add("col-xl-6", "col-lg-6");
     const html = `
-    <div class="card card-stats mb-4">
+    <div class="card card-stats mb-4" style="border-radius: 30px">
         <div class="card-body">
             <div class="row">
             <div class="col">

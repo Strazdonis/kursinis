@@ -1,5 +1,6 @@
 const Todo = require('../../models/todo');
 const { auth } = require('../../utils/middlewares');
+const xssFilters = require('xss-filters');
 module.exports = (app) => {
     app.get('/todo', (req, res) => {
         const user = req.user._id;
@@ -26,9 +27,9 @@ module.exports = (app) => {
         const id = body.id;
         const data = {};
 
-        data.task = body.task;
+        data.task = xssFilters.inHTMLData(body.task);
 
-        data.state = body.state;
+        data.state = xssFilters.inHTMLData(body.state);
         if (Object.keys(data).length === 0) {
             return res.status(400).json({ error: "nothing to update" });
         }
@@ -53,7 +54,7 @@ module.exports = (app) => {
 
     app.post('/todo', (req, res) => {
         const body = req.body;
-        const task = body.task;
+        const task = xssFilters.inHTMLData(body.task);
         const user = req.user._id;
 
         //TODO: validation?
@@ -75,7 +76,7 @@ module.exports = (app) => {
         console.log(body);
         const user = req.user._id;
         const id = body.id;
-        console.log(user, id)
+        console.log(user, id);
         Todo.deleteOne({ user, _id: id }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
@@ -91,10 +92,10 @@ module.exports = (app) => {
         const id = body.id;
         const data = {};
         if (body.task) {
-            data.task = body.task;
+            data.task = xssFilters.inHTMLData(body.task);
         }
         if (body.state) {
-            data.state = body.state;
+            data.state = xssFilters.inHTMLData(body.state);
         }
         console.log(body);
         console.log(user, id, data);

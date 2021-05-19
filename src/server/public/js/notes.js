@@ -19,6 +19,7 @@ const createNoteElement = (title, text, date, id) => {
     el.id = id;
     el.classList.add('d-inline-block', 'card', 'mb-3');
     el.style.width = '18rem';
+    el.style['border-radius'] = '30px';
     el.style['margin-right'] = '2rem';
     el.innerHTML = NoteHtml.trim();
     return el;

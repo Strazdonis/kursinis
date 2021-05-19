@@ -2,10 +2,11 @@ const Crypto = require('../../models/crypto');
 const { getManyCryptoData } = require('../../utils/crypto');
 const logger = require("../../logger");
 const { auth } = require('../../utils/middlewares');
+const xssFilters = require('xss-filters');
 module.exports = function (router) {
     router.post('/crypto', (req, res) => {
         const body = req.body;
-        let track = body.crypto;
+        let track = body.crypto.map(c => xssFilters.inHTMLData(c));
         if (Array.isArray(track)) {
             track = track.map(c => c.toLowerCase());
         } else {
@@ -54,7 +55,7 @@ module.exports = function (router) {
 
     router.put('/crypto', (req, res) => {
         const body = req.body;
-        let track = body.crypto;
+        let track = body.crypto.map(c => xssFilters.inHTMLData(c));
         if (!Array.isArray(track)) {
             logger.verbose(`unexpected track type in crypto.js: ${typeof track}`);
             return res.status(400).json({ error: "bad request, body.crypto must be an array" });
@@ -100,7 +101,7 @@ module.exports = function (router) {
 
     router.post('/crypto/update_user', (req, res) => {
         const body = req.body;
-        let track = body.cryptos;
+        let track = body.cryptos.map(c => xssFilters.inHTMLData(c));;
         //TODO: validate if crypto is even available
         //TODO: reject non-arrays?
         if (Array.isArray(track)) {

@@ -82,12 +82,12 @@ const generateViewButton = (id, element) => {
                         </select>
                     </div>
                     <label class="form-check-label" for="swal-verified">Verification status</label><br/>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input swal2-select" ${user.verified ? 'checked' : ''} type="radio" name="isVerified" id="swal-verified-true" value="true">
+                    <div class="form-check form-check-inline col-md-5">
+                        <input class="form-check-input swal2-select " ${user.verified ? 'checked' : ''} type="radio" name="isVerified" id="swal-verified-true" value="true">
                         <label class="form-check-label" for="swal-verified-true">Verified</label>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input swal2-select" ${user.verified ? '' : 'checked'} type="radio" name="isVerified" id="swal-verified-false" value="false">
+                    <div class="form-check form-check-inline col-md-5">
+                        <input class="form-check-input swal2-select " ${user.verified ? '' : 'checked'} type="radio" name="isVerified" id="swal-verified-false" value="false">
                         <label class="form-check-label" for="swal-verified-false">Unverified</label>
                     </div>
                     

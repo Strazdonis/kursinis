@@ -1,6 +1,7 @@
 const User = require('../../models/user');
 const logger = require("../../logger");
 const { auth } = require('../../utils/middlewares');
+const xssFilters = require('xss-filters');
 module.exports = (app) => {
     /**
      * fetch a user by ID
@@ -50,15 +51,15 @@ module.exports = (app) => {
             }
 
             
-            user.email = body.email;
-            user.username = body.username;
-            user.displayname = body.displayname;
-            user.firstname = body.firstname;
-            user.lastname = body.lastname;
-            user.city = body.city;
-            user.code = body.code;
-            user.perms = body.perms;
-            user.verified = body.verified;
+            user.email = xssFilters.inHTMLData(body.email);
+            user.username = xssFilters.inHTMLData(body.username);
+            user.displayname = xssFilters.inHTMLData(body.displayname);
+            user.firstname = xssFilters.inHTMLData(body.firstname);
+            user.lastname = xssFilters.inHTMLData(body.lastname);
+            user.city = xssFilters.inHTMLData(body.city);
+            user.code = xssFilters.inHTMLData(body.code);
+            user.perms = xssFilters.inHTMLData(body.perms);
+            user.verified = xssFilters.inHTMLData(body.verified);
 
             user.save(user, function (err) {
                 if (err) {
@@ -89,7 +90,7 @@ module.exports = (app) => {
                 return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
             }
 
-            user.displayname = req.body.displayname || user.displayname;
+            user.displayname = xssFilters.inHTMLData(req.body.displayname) || user.displayname;
             user.save(function (err) {
                 if (err) {
                     logger.error(`/api/user/ couldn't save user ${uid} in DB.\nUSER: ${user}\nERROR: ${err.stack}`);

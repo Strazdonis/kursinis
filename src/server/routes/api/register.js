@@ -1,5 +1,6 @@
 const User = require("../../models/user");
 const logger = require("../../logger");
+const xssFilters = require('xss-filters');
 function makeid(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -26,11 +27,11 @@ module.exports = (app) => {
         }
         const code = makeid(16);
         // TODO: remove username, login using email instead
-        User.register({ username: data.email, displayname: `${data.firstname} ${data.lastname}`, email: data.email, code: code, firstname: data.firstname, lastname: data.lastname }, data.password, function (err, user) {
+        User.register({ username: xssFilters.inHTMLData(data.email), displayname: `${xssFilters.inHTMLData(data.firstname)} ${xssFilters.inHTMLData(data.lastname)}`, email: xssFilters.inHTMLData(data.email), code: code, firstname: xssFilters.inHTMLData(data.firstname), lastname: xssFilters.inHTMLData(data.lastname) }, data.password, function (err, user) {
             if (err) {
                 //TODO: return more reasonable messages & status codes, document them
-                if(err.driver && err.keyPattern.email) {
-                    return res.status(500).json({ error: {message: "emailTaken"} });
+                if (err.driver && err.keyPattern.email) {
+                    return res.status(500).json({ error: { message: "emailTaken" } });
                 } else {
                     logger.warn(`Couldn't find an appropriate error handler for ${err.keyPattern}, ${err}`);
                 }

@@ -1,5 +1,6 @@
 const Notes = require('../../models/notes');
 const { auth } = require('../../utils/middlewares');
+const xssFilters = require('xss-filters');
 module.exports = (app) => {
     app.get('/notes', (req, res) => {
         const user = req.user._id;
@@ -43,7 +44,7 @@ module.exports = (app) => {
         console.log(body);
         const user = body.user;
         const id = body.id;
-        const data = {text: body.text, title: body.title};
+        const data = {text: xssFilters.inHTMLData(body.text), title: xssFilters.inHTMLData(body.title)};
 
         console.log(data, id, user);
         if (Object.keys(data).length === 0) {
@@ -66,8 +67,8 @@ module.exports = (app) => {
         //TODO: validation?
         const note = new Notes();
         note.user = user;
-        note.text = text;
-        note.title = title;
+        note.text = xssFilters.inHTMLData(text);
+        note.title = xssFilters.inHTMLData(title);
 
         note.save((err, doc) => {
             if (err) {
@@ -112,10 +113,10 @@ module.exports = (app) => {
         const id = body.id;
         const data = {};
         if (body.text) {
-            data.text = body.text;
+            data.text = xssFilters.inHTMLData(body.text);
         }
         if (body.title) {
-            data.title = body.title;
+            data.title = xssFilters.inHTMLData(body.title);
         }
         console.log(data, id);
         if (Object.keys(data).length === 0) {
