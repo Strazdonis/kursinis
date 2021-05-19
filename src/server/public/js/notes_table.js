@@ -1,4 +1,7 @@
 import { postData } from "./utils.js";
+document.getElementsByClassName("active")[0].classList.remove("active");
+document.getElementById("tables-container").classList.add("active");
+document.getElementById("notes-table").classList.add("active");
 const capitalize = (s) => {
     if (typeof s !== 'string') return '';
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -13,7 +16,10 @@ const updateNote = async (data, id) => {
 };
 const deleteNote = async (id) => {
     const response = await postData(`/api/notes/${id}`, { id: id }, "DELETE");
-    console.log(response);
+    if(response.success) {
+        swal.fire("success", "successfully deleted", "success");
+        document.getElementById(`row_${id}`).style.display = "none";
+    }
 
     return response;
 };
@@ -105,7 +111,7 @@ fetch("/api/notes/all").then(res => res.json()).then(response => {
                 <td>${note.text}</td>
                 <td class="action-buttons"></td>`;
         const element = document.createElement("tr");
-        element.id = `row_${note.user}`;
+        element.id = `row_${note._id}`;
         element.innerHTML = html;
         const viewBtn = generateViewButton(note._id, note, element);
         const delBtn = generateDeleteButton(note._id, note, element);

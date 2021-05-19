@@ -7,7 +7,7 @@ module.exports = (app) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 
@@ -16,7 +16,7 @@ module.exports = (app) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 
@@ -30,9 +30,20 @@ module.exports = (app) => {
 
         data.state = body.state;
         if (Object.keys(data).length === 0) {
-            return res.send(400, { error: "nothing to update" });
+            return res.status(400).json({ error: "nothing to update" });
         }
         Todo.updateOne({ user, _id: id }, { $set: data }, (err, doc) => {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+            return res.json({ success: true, message: "success", result: doc });
+        });
+    });
+
+    app.delete('/todo/:id', (req, res) => {
+        const body = req.body;
+        const id = body.id;
+        Todo.deleteOne({ _id: id }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -55,7 +66,7 @@ module.exports = (app) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 
@@ -67,7 +78,7 @@ module.exports = (app) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 
@@ -84,13 +95,13 @@ module.exports = (app) => {
             data.state = body.state;
         }
         if (Object.keys(data).length === 0) {
-            return res.send(400, { error: "nothing to update" });
+            return res.status(400).json({ error: "nothing to update" });
         }
         Todo.updateOne({ user, _id: id }, { $set: data }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 };

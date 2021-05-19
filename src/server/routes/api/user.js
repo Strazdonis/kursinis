@@ -29,7 +29,7 @@ module.exports = (app) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 

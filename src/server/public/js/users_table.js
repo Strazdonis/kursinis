@@ -1,4 +1,7 @@
 import { postData } from "./utils.js";
+document.getElementsByClassName("active")[0].classList.remove("active");
+document.getElementById("tables-container").classList.add("active");
+document.getElementById("users-table").classList.add("active");
 const capitalize = (s) => {
     if (typeof s !== 'string') return '';
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -21,6 +24,7 @@ const deleteUser = async (id) => {
         console.log(index, users[index], users);
         users[index] = response.user;
         console.log(users);
+        document.getElementById(`row_${id}`).style.display = "none";
     }
 
     return response;
@@ -159,7 +163,7 @@ fetch("/api/users").then(res => res.json()).then(response => {
     users.forEach(user => {
         const html = `<td>${user.username}</td>
                 <td>${user.displayname}</td>
-                <td>${user.fullname}</td>
+                <td>${user.firstname} ${user.lastname}</td>
                 <td>${user.perms}</td>
                 <td>${user.verified}</td>
                 <td class="action-buttons"></td>`;

@@ -247,7 +247,7 @@
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block">{{session.fullname}}</a>
+              <a href="#" class="d-block">{{session.displayname}}</a>
             </div>
           </div>
 
@@ -279,7 +279,7 @@
               <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
               <li class="nav-item">
-                <a href="/admin/" class="nav-link active">
+                <a href="/admin/" id="dashboard-link" class="nav-link active">
                   <i class="nav-icon fas fa-home"></i>
                   <p>
                     Dashboard
@@ -287,7 +287,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" id="tables-container" class="nav-link">
                   <i class="nav-icon fas fa-table"></i>
                   <p>
                     Tables
@@ -296,25 +296,25 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="/admin/tables/users" class="nav-link">
+                    <a href="/admin/tables/users" id="users-table" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Users</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="/admin/tables/todos" class="nav-link">
+                    <a href="/admin/tables/todos" id="todos-table" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>To-Dos</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="/admin/tables/notes" class="nav-link">
+                    <a href="/admin/tables/notes" id="notes-table" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Notes</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="/admin/tables/cryptos" class="nav-link">
+                    <a href="/admin/tables/cryptos" id="cryptos-table" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Cryptos</p>
                     </a>

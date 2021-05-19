@@ -16,7 +16,24 @@ module.exports = (app) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
+        });
+    });
+
+    app.get('/notes/fake', auth.moderator, (req, res) => {
+        const notes = Notes.fake(100);
+        console.log(notes);
+        notes.forEach(note => {
+            note.save();
+        });
+    });
+
+    app.get('/notes/new', auth.moderator, (req, res) => {
+        Notes.find({}).sort({'date': -1}).limit(5).exec((err, doc) => {
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 
@@ -71,6 +88,20 @@ module.exports = (app) => {
                 return res.status(500).json({ error: err });
             }
             return res.json({ message: "success", result: doc });
+        });
+    });
+
+    app.delete('/notes/:id', auth.moderator, (req, res) => {
+        const body = req.body;
+        const id = body.id;
+        console.log(body)
+
+        Notes.deleteOne({ _id: id }, (err, doc) => {
+            console.log(doc);
+            if (err) {
+                return res.status(500).json({ error: err });
+            }
+            return res.json({ message: "success", success: true, result: doc });
         });
     });
 

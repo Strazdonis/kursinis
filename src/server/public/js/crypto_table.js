@@ -1,4 +1,7 @@
 import { postData } from "./utils.js";
+document.getElementsByClassName("active")[0].classList.remove("active");
+document.getElementById("tables-container").classList.add("active");
+document.getElementById("cryptos-table").classList.add("active");
 const capitalize = (s) => {
     if (typeof s !== 'string') return '';
     return s.charAt(0).toUpperCase() + s.slice(1);

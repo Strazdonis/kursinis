@@ -45,10 +45,10 @@ app.use(session
         saveUninitialized: false,
         store: sessionStore,
         cookie: {
-            secure: true,
+            //secure: true,
             path: "/",
             sameSite: "strict",
-            httpOnly: true,
+            //httpOnly: true,
             maxAge: 31556952000, // 1 year
         }
     })
@@ -94,6 +94,7 @@ app.use(function (req, res, next) {
             username: user.username,
             fullname: user.fullname,
             firstname: splitName[0],
+            displayname: user.displayname,
             lastname: splitName[1],
             city: user.city,
             email: user.email,

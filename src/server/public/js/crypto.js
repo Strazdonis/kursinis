@@ -1,9 +1,18 @@
 import { postData } from "./utils.js";
 const container = document.getElementById("crypto-container");
 
+async function deleteCrypto(crypto, el) {
+    const response = await postData("api/crypto/", {crypto}, "DELETE");
+    if(response.success) {
+        el.offsetParent.remove();
+    }
+}
+
 const generateCard = (data) => {
-    const html = `<div class="col-xl-6 col-lg-6">
-        <div class="card card-stats mb-4">
+    const el = document.createElement("div");
+    el.classList.add("col-xl-6", "col-lg-6");
+    const html = `
+    <div class="card card-stats mb-4">
         <div class="card-body">
             <div class="row">
             <div class="col">
@@ -11,7 +20,7 @@ const generateCard = (data) => {
                 <span class="h2 font-weight-bold mb-0">${Math.trunc(data.priceUsd * 100) / 100}$</span>
             </div>
             <div class="col-auto">
-                <i onclick="deleteCrypto('${data.id}', this)" class="fas fa-times"></i>
+                <i onclick="" class="fas fa-times delete-icon"></i>
             </div>
             </div>
             <p class="mt-3 mb-0 text-muted text-sm">
@@ -20,9 +29,14 @@ const generateCard = (data) => {
             <span class="text-nowrap">Past 24 hours</span>
             </p>
         </div>
-        </div>
-    </div>`;
-    return html;
+    </div>
+    `;
+    el.innerHTML = html;
+    el.getElementsByClassName("delete-icon")[0].addEventListener('click', (e) => {
+        deleteCrypto(data.id, e.target);
+    });
+
+    return el;
 };
 
 const render = async () => {
@@ -33,7 +47,7 @@ const render = async () => {
         const cryptos = result.data;
         cryptos.forEach(crypto => {
             const card = generateCard(crypto);
-            container.innerHTML += card;
+            container.appendChild(card);
         });
     });
 };

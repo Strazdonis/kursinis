@@ -64,10 +64,15 @@ module.exports = function (router) {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            if (!doc) {
-                return res.status(404).json({ error: "not found" });
+           
+            if(!doc) {
+                doc = new Crypto();
+                doc.user = user;
             }
-            let tracked = doc.crypto;
+            console.log(doc);
+            //jshint ignore:start
+            let tracked = doc.crypto || [];
+            //jshint ignore:end
             if (tracked.length >= 8) {
                 return res.status(404).json({ error: "You already track the maximum amount of cryptocurrencies." });
             }
@@ -130,6 +135,9 @@ module.exports = function (router) {
             }
             // return res.json({ message: "success", result: doc });
             const list = doc.crypto;
+            if(doc.crypto.length == 0) {
+                return res.json({data: []});
+            }
             const ids = list.join(",");
             const data = await getManyCryptoData(ids);
             if (data.response == '400') {
