@@ -44,6 +44,10 @@ document.getElementById("form").addEventListener('submit', async e => {
     if (response.success) {
         const el = generateTask(response.result);
         todo_list.appendChild(el);
+    } else {
+        const errors = Object.values(response.error.errors).map(error => error.message).join("<br>");
+        swal.fire("Error", errors, 'error');
+        console.log(errors)
     }
     input.value = '';
 });

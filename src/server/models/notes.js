@@ -13,8 +13,8 @@ getRandom = (arr) => {
  */
 const NotesSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true, fake: () => { return getRandom(users); } },
-    title: { type: String, required: true, trim: true, fake: { generator: 'name', type: 'firstName' }  },
-    text: { type: String, required: true, trim: true, fake: () => { return [1,2,3,4,5].map(n => n = getRandom(words)).join(" "); } },
+    title: { type: String, required: "Title field is required", trim: true, fake: { generator: 'name', type: 'firstName' }  },
+    text: { type: String, required: "Text field is required", trim: true, fake: () => { return [1,2,3,4,5].map(n => n = getRandom(words)).join(" "); } },
     date: { type: Date, default: Date.now, fake: {generator: 'date'} },
 });
 

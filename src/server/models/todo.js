@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
  */
 const TodoSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true },
-    task: { type: String, required: true, trim: true },
+    task: { type: String, required: 'Task field is required', trim: true },
     state: { type: String, enum: ['active', 'completed', 'removed'] }
 });
 

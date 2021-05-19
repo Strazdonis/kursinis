@@ -312,20 +312,6 @@ input[type="checkbox"] {
     flex-direction: column-reverse !important
 }
 
-.d-flex,
-.loader-demo-box,
-.distribution-chart-legend .distribution-chart,
-.distribution-chart-legend .distribution-chart .item,
-.list-wrapper ul li,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a,
-.email-wrapper .mail-sidebar .menu-bar .profile-list-item a .user,
-.email-wrapper .mail-list-container .mail-list .details,
-.email-wrapper .message-body .attachments-sections ul li .thumb,
-.email-wrapper .message-body .attachments-sections ul li .details .buttons,
-.lightGallery .image-tile .demo-gallery-poster,
-.swal2-modal,
-.navbar .navbar-menu-wrapper .navbar-nav,
-.navbar .navbar-menu-wrapper .navbar-nav .nav-item.nav-profile,
-.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .navbar-dropdown .dropdown-item {
+.list-wrapper ul li {
     display: flex !important
 }

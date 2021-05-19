@@ -73,10 +73,23 @@ const saveProcess = async (event) => {
     const text = parent.querySelector("#note-text").innerText;
     if(parent.id != 'note-example') {
         const data = await postData("/api/notes", { id: parent.id, title, text }, 'PATCH');
+        if(data.error) {
+            const errors = Object.values(data.error.errors).map(error => error.message).join("<br>");
+            swal.fire("Error", errors, 'error');
+            console.log(errors);
+        }
         console.log(data);
     } else {
         const data = await postData("/api/notes", { title, text });
-        const id = data.result._id;
-        parent.id = id;
+        if(data.success) {
+            const id = data.result._id;
+            parent.id = id;
+        } else {
+            console.log(data);
+            const errors = Object.values(data.error.errors).map(error => error.message).join("<br>");
+            swal.fire("Error", errors, 'error');
+            console.log(errors);
+        }
+
     }
 };

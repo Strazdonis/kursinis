@@ -30,7 +30,7 @@ module.exports = (app) => {
     });
 
     app.get('/notes/new', auth.moderator, (req, res) => {
-        Notes.find({}).sort({'date': -1}).limit(5).exec((err, doc) => {
+        Notes.find({}).sort({ 'date': -1 }).limit(5).exec((err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -44,11 +44,11 @@ module.exports = (app) => {
         console.log(body);
         const user = body.user;
         const id = body.id;
-        const data = {text: xssFilters.inHTMLData(body.text), title: xssFilters.inHTMLData(body.title)};
+        const data = { text: xssFilters.inHTMLData(body.text), title: xssFilters.inHTMLData(body.title) };
 
         console.log(data, id, user);
         if (Object.keys(data).length === 0) {
-            return res.send(400, { error: "nothing to update" });
+            return res.status(400).json({ error: "nothing to update" });
         }
         Notes.updateOne({ user, _id: id }, { $set: data }, (err, doc) => {
             if (err) {
@@ -64,7 +64,6 @@ module.exports = (app) => {
         const title = body.title;
         const user = req.user._id;
 
-        //TODO: validation?
         const note = new Notes();
         note.user = user;
         note.text = xssFilters.inHTMLData(text);
@@ -74,7 +73,7 @@ module.exports = (app) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 
@@ -88,7 +87,7 @@ module.exports = (app) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 
@@ -118,15 +117,29 @@ module.exports = (app) => {
         if (body.title) {
             data.title = xssFilters.inHTMLData(body.title);
         }
+        const errors = {};
+        // mongoose doesnt validate on update requests, validate manually
+        console.log(body.text, body.title)
+        if (body.text == "" || body.text.trim() == "" || data.text == "" || data.text.trim() == "") {
+            // match mongoose error format
+            errors.text = { message: "Text field is required" };
+        }
+        if (body.title == "" || body.title.trim() == "" || data.title == "" || data.title.trim() == "") {
+            // match mongoose error format
+            errors.title = { message: "Title field is required" };
+        }
+        if (errors.text || errors.title) {
+            return res.status(400).json({ error: { errors } });
+        }
         console.log(data, id);
         if (Object.keys(data).length === 0) {
-            return res.send(400, { error: "nothing to update" });
+            return res.status(400).json({ error: "nothing to update" });
         }
         Notes.updateOne({ user, _id: id }, { $set: data }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
-            return res.json({ message: "success", result: doc });
+            return res.json({ success: true, message: "success", result: doc });
         });
     });
 };
