@@ -50,11 +50,11 @@ const generateViewButton = (id, todo, element) => {
                         <input class="form-check-input swal2-select" ${todo.state === "active" ? 'checked' : ''} type="radio" name="state" id="swal-state-active">
                         <label class="form-check-label" for="swal-state-active">Active</label>
                     </div>
-                    <div class="form-check form-check-inline col-lg-12 col-xl-3">
+                    <div class="form-check form-check-inline col-lg-12 col-xl-4">
                         <input class="form-check-input swal2-select" ${todo.state === "completed" ? 'checked' : ''} type="radio" name="state" id="swal-state-completed">
                         <label class="form-check-label" for="swal-state-completed">Completed</label>
                     </div>
-                    <div class="form-check form-check-inline col-lg-12 col-xl-3">
+                    <div class="form-check form-check-inline col-lg-12 col-xl-4">
                         <input class="form-check-input swal2-select" ${todo.state === "removed" ? 'checked' : ''} type="radio" name="state" id="swal-state-removed">
                         <label class="form-check-label" for="swal-state-removed">Removed</label>
                     </div>
