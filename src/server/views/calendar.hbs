@@ -1,6 +1,59 @@
 <div class="row mb-2">
-    <div class="col-sm-12">
-        <h1>Calendar</h1>
-        <hr>
+  <div class="col-sm-12">
+    <h1>Calendar</h1>
+    <hr />
+    <div id="menu">
+      <span id="menu-navi">
+        <button
+          id="button-prev"
+          class="btn btn-sm font-weight-bold change-button"
+        >Prev</button>
+        <button
+          id="button-today"
+          class="btn btn-sm font-weight-bold change-button"
+        >Today</button>
+        <button
+          id="button-next"
+          class="btn btn-sm font-weight-bold change-button"
+        >Next</button>
+      </span>
+      <span id="renderRange" class="render-range"></span>
     </div>
+
+    <div id="calendar"></div>
+
+  </div>
 </div>
+
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css"
+/>
+
+<!-- If you use the default popups, use this. -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css"
+/>
+
+<script
+  src="https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js"
+></script>
+<script
+  src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js"
+></script>
+<script
+  src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js"
+></script>
+<script
+  src="https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js"
+></script>
+
+<script src="js/calendar.js"></script>

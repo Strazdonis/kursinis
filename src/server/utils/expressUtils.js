@@ -12,11 +12,14 @@ module.exports = {
         const self = `'self'`;
         const unsafeInline = `'unsafe-inline'`;
         const scripts = [
+            
+            'https://uicdn.toast.com',
             'https://cdn.datatables.net',
             'http://cdn.jsdelivr.net/npm/sweetalert2@11',
             'https://cdn.jsdelivr.net/npm/sweetalert2@11'
         ];
         const styles = [
+            'https://uicdn.toast.com',
             'https://ka-f.fontawesome.com/',
             'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css',
             'https://fonts.googleapis.com',
@@ -32,7 +35,8 @@ module.exports = {
 
         ];
         const images = [
-
+            'data:',
+            'img-src *'
         ];
         const connect = [
             "https://api.coincap.io/",
