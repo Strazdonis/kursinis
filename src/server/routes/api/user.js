@@ -73,11 +73,11 @@ module.exports = (app) => {
     });
 
     /**
-     * patch (update only given fields) logged in user
-     * possible fields - { username, fullname, city }
+     * patch (update only given fields) for logged in user
+     * possible fields - { displayname, firstname, lastname }
      * @returns object with a message property
      */
-    app.patch('/user/', auth.admin, (req, res) => {
+    app.patch('/user/', auth.required, (req, res) => {
         const uid = req.user._id;
         User.findById(uid, function (err, user) {
             if (err) {
@@ -90,14 +90,19 @@ module.exports = (app) => {
                 return res.status(404).json({ error: err, message: 'failed finding your user in the database' });
             }
 
-            user.displayname = xssFilters.inHTMLData(req.body.displayname) || user.displayname;
+            // '??' checks for emptyness, || wouldn't allow falsy values. node v14+ only
+            // jshint ignore:start
+            user.displayname = xssFilters.inHTMLData(req.body.displayname ?? user.displayname) ;
+            user.firstname = xssFilters.inHTMLData(req.body.firstname ?? user.firstname);
+            user.lastname = xssFilters.inHTMLData(req.body.lastname ?? user.lastname);
+            // jshint ignore:end
             user.save(function (err) {
                 if (err) {
                     logger.error(`/api/user/ couldn't save user ${uid} in DB.\nUSER: ${user}\nERROR: ${err.stack}`);
                     return res.status(400).send({ error: err, message: "failed saving updated data in database" });
                 }
 
-                res.status(202).json({ message: 'User updated!' });
+                res.status(202).json({ success: true, message: 'User updated!', result: user });
             });
 
         });

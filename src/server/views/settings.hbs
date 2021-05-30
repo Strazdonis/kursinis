@@ -1,7 +1,7 @@
 <div class="row mb-2">
     <div class="col-sm-12">
         <h1>Settings</h1>
-        <h3 class="mt-5">Name</h3>
+        {{!-- <h3 class="mt-5">Name</h3> --}}
         <hr>
     </div>
 </div>
@@ -10,10 +10,10 @@
         <h5>Display Name:</h5>
     </div>
     <div class="col-sm-4 ">
-        <h5 class="text-font-bold">{{session.fullname}}</h5>
+        <h5 class="text-font-bold">{{session.displayname}}</h5>
     </div>
     <div class="col-sm-4">
-        <a href="#" class="settings-edit"><i class="fas fa-edit"></i> Edit</a>
+        <a href="#" attr-field="displayname" attr-pretty="display name" attr-current="{{session.displayname}}" class="settings-edit"><i class="fas fa-edit"></i> Edit</a>
     </div>
 </div>
 <div class="row mb-3">
@@ -24,18 +24,18 @@
         <h5 class="text-font-bold">{{session.firstname}}</h5>
     </div>
     <div class="col-sm-4">
-        <a href="#" class="settings-edit"><i class="fas fa-edit"></i> Edit</a>
+        <a href="#" attr-field="firstname" attr-pretty="first name" attr-current="{{session.firstname}}" class="settings-edit"><i class="fas fa-edit"></i> Edit</a>
     </div>
 </div>
 <div class="row mb-3">
     <div class="col-sm-3">
-        <h5>Second Name:</h5>
+        <h5>Last Name:</h5>
     </div>
     <div class="col-sm-4">
         <h5 class="text-font-bold">{{session.lastname}}</h5>
     </div>
     <div class="col-sm-4">
-        <a href="#" class="settings-edit"><i class="fas fa-edit"></i> Edit</a>
+        <a href="#" attr-field="lastname" attr-pretty="last name" attr-current="{{session.lastname}}" class="settings-edit"><i class="fas fa-edit"></i> Edit</a>
     </div>
 </div>
 <div class="row mb-3">
@@ -63,6 +63,8 @@
         <input class="form-control input-style" type="password" placeholder="New Password">
     </div>
     <div class="col-sm-3 mb-2 mt-3">
-        <a href="#" class="change-button">Change</a>
+        <a id="changePassBtn" href="#" class="change-button">Change</a>
     </div>
 </div>
+
+<script type="module" src="js/settings.js"></script>
