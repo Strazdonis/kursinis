@@ -22,3 +22,16 @@ import { postData } from "./utils.js";
 
     });
 });
+
+document.getElementById("changePassForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const body = Object.fromEntries(new FormData(e.target).entries());
+    const response = await postData("/api/user/changepass", body);
+    console.log(response);
+    if(response.error) {
+        swal.fire("Error", response.error == "IncorrectPasswordError" ? "Old password is incorrect" : response.message, "error");
+    }
+    if(response.success) {
+        swal.fire("success", "Your password has been changed", "success");
+    }
+});

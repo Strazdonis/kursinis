@@ -52,19 +52,19 @@
         <hr>
     </div>
 </div>
-<div class="row mb-5 mt-3">
+<form class="row mb-5 mt-3" id="changePassForm">
     <div class="col-sm-3">
-    <h5>Change Password</h5>
+        <h5>Change Password</h5>
     </div>
     <div class="col-sm-3 mb-2 mt-2">
-        <input class="form-control input-style" type="password" placeholder="Current Password">
+        <input class="form-control input-style" name="oldPassword" required="required" type="password" placeholder="Current Password">
     </div>
     <div class="col-sm-3 mb-2 mt-2">
-        <input class="form-control input-style" type="password" placeholder="New Password">
+        <input class="form-control input-style" name="newPassword" minlength="6" required="required" type="password" placeholder="New Password">
     </div>
-    <div class="col-sm-3 mb-2 mt-3">
-        <a id="changePassBtn" href="#" class="change-button">Change</a>
+    <div class="col-sm-3 mt-1">
+        <button type="submit" href="#" class="d-inline change-button">Change</button>
     </div>
-</div>
+</form>
 
 <script type="module" src="js/settings.js"></script>

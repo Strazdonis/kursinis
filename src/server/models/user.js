@@ -53,8 +53,10 @@ UserSchema.virtual('fullname').
         this.set({ firstname, lastname });
     });
 
-    // https://github.com/saintedlama/passport-local-mongoose#options
+// https://github.com/saintedlama/passport-local-mongoose#options
 UserSchema.plugin(passportLocalMongoose, {
+    limitAttempts: true,
+    maxAttempts: 5,
 });
 
 module.exports = mongoose.model('User', UserSchema);
