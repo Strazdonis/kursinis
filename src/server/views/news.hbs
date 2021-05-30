@@ -1,6 +1,17 @@
 <div class="row mb-2">
-    <div class="col-sm-12">
-        <h1>News</h1>
-        <hr>
+  <div class="col-sm-12">
+    <h1>News</h1>
+    <div class="form-group">
+      <label for="rss-feed">Feed</label>
+      <select class="form-control" id="rss-feed">
+        <option value="bbc">BBC</option>
+        <option value="15min">15min</option>
+        <option value="delfi">Delfi</option>
+        <option value="custom">Custom</option>
+      </select>
     </div>
+    <hr />
+    <div class="row" id="rss-container"></div>
+  </div>
 </div>
+<script src="js/news.js"></script>
