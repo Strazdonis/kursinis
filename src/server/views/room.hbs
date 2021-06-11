@@ -1,0 +1,17 @@
+<div class="row mb-2">
+  <div class="col-sm-12">
+    <h1>Room <span id="room-id"></span></h1>
+    <hr />
+  </div>
+</div>
+<div class="row">
+    <h2>Connected peers:</h2>
+    <div id="peer-list"></div>
+    {{!-- <h2>Video grid:</h2> --}}
+    <div id="video-grid"></div>
+</div>
+
+
+<script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+<script src="/socket.io/socket.io.js" defer></script>
+<script type="module" src="/js/room.js" defer></script>

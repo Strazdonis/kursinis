@@ -3,8 +3,8 @@
 <head>
 	<title>Unum Totus | Home</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="style/style.css">
-	<link rel="stylesheet" href="style/fontawesome.min.css" >
+	<link rel="stylesheet" type="text/css" href="/style/style.css">
+	<link rel="stylesheet" href="/style/fontawesome.min.css" >
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -21,5 +21,20 @@
 		</div>
 	</div>
 </body>
+<script>
+	document.getElementById("create-room").addEventListener("click", e => {
+		fetch("/api/create-room").then(res => res.json()).then((room) => {
+			window.location.href = "/room/" + room;
+		});
+	});
+	const input = document.getElementById("room-input");
+	document.getElementById("join-room").addEventListener("click", e => {
+		const room = input.value;
+		if(!room) {
+			return Swal.fire("You need to input a room id", "error", "error");
+		}
+		window.location.href = "/room/" + room;
+	})
+</script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>

@@ -12,11 +12,11 @@ module.exports = {
         const self = `'self'`;
         const unsafeInline = `'unsafe-inline'`;
         const scripts = [
-            
             'https://uicdn.toast.com',
             'https://cdn.datatables.net',
             'http://cdn.jsdelivr.net/npm/sweetalert2@11',
-            'https://cdn.jsdelivr.net/npm/sweetalert2@11'
+            'https://cdn.jsdelivr.net/npm/sweetalert2@11',
+            'https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js',
         ];
         const styles = [
             'https://uicdn.toast.com',
@@ -32,7 +32,6 @@ module.exports = {
             'https://code.ionicframework.com/ionicons/2.0.1/fonts/'
         ];
         const frames = [
-
         ];
         const images = [
             'data:',
@@ -40,6 +39,8 @@ module.exports = {
         ];
         const connect = [
             "https://api.coincap.io/",
+            "wss://0.peerjs.com/peerjs",
+            "https://0.peerjs.com"
         ];
 
         return {

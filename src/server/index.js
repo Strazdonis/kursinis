@@ -17,6 +17,11 @@ const router = express.Router();
 const apiRouter = express.Router();
 const adminRouter = express.Router();
 const { apiRouterMiddleware, httpLogger, generateNonce } = require('./utils/middlewares');
+const { ExpressPeerServer } = require('peer');
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+// peerJS call rooms
+rooms = [];
 // not needed here but this makes pkg package it for mongodb
 const saslprep = require("saslprep");
 
@@ -127,6 +132,28 @@ sessionStore.on('set', data => {
     logger.verbose(`saved session: ${data}`);
 });
 
+
+
+
+const peerServer = ExpressPeerServer(server, {
+    path: '/'
+});
+
+app.use('/peerjs', peerServer);
+
+
+io.on('connection', socket => {
+    socket.on('join-room', (roomId, userId) => {
+        socket.join(roomId);
+        socket.broadcast.to(roomId).emit('user-connected', userId);
+        socket.on('disconnect', () => {
+            socket.broadcast.to(roomId).emit('user-disconnected', userId);
+        });
+    });
+});
+
+
+
 const routePath = "./routes/";
 
 // dynamically load routes from /routes
@@ -147,5 +174,5 @@ elapsedTime("START connectig to db");
 connectDb().then(async (connection) => {
     elapsedTime("END connecting to DB");
     const port = process.env.PORT || 3000;
-    app.listen(port, _ => { logger.info("App is listening on http://localhost:" + port); });
+    server.listen(port, _ => { logger.info("App is listening on http://localhost:" + port); });
 });
