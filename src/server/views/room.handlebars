@@ -5,13 +5,17 @@
   </div>
 </div>
 <div class="row">
-    <h2>Connected peers:</h2>
-    <div id="peer-list"></div>
-    {{!-- <h2>Video grid:</h2> --}}
-    <div id="video-grid"></div>
+  {{!-- <h4>Connected peers:</h4> --}}
+  <div id="peer-list"></div>
+  {{! <h2>Video grid:</h2> }}
+  <div class="container">
+    <div id="video-grid" class="row">
+      
+    </div>
+  </div>
 </div>
 
-
+{{> script}}
 <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
 <script src="/socket.io/socket.io.js" defer></script>
 <script type="module" src="/js/room.js" defer></script>

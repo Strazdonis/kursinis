@@ -2,15 +2,18 @@ const fs = require('fs');
 const path = require('path');
 const logger = require("../logger");
 var start = process.hrtime();
+const cache = new Map();
+
 module.exports = {
 
     getNonce: function (req, res) {
-        return `'nonce-${res.locals.nonce}'`;
+        return `'nonce-${nonce}'`;
     },
 
     getDirectives: function () {
         const self = `'self'`;
         const unsafeInline = `'unsafe-inline'`;
+        const unsafeEval = `'unsafe-eval'`;
         const scripts = [
             'https://uicdn.toast.com',
             'https://cdn.datatables.net',
@@ -42,10 +45,10 @@ module.exports = {
             "wss://0.peerjs.com/peerjs",
             "https://0.peerjs.com"
         ];
-
+        const prettyNonce = `'nonce-${nonce}'`;
         return {
             defaultSrc: [self],
-            scriptSrc: [self, this.getNonce, ...scripts],
+            scriptSrc: [self, unsafeInline, unsafeEval,...scripts],
             styleSrc: [self, unsafeInline, ...styles],
             fontSrc: [self, ...fonts],
             frameSrc: [self, ...frames],
@@ -61,11 +64,11 @@ module.exports = {
 
     loadRoutes: function (routePath, router, dir) {
         fs.readdirSync(routePath).forEach(function (file) {
-            if(!file.includes('.js')) return;
+            if (!file.includes('.js')) return;
             const route = routePath + file;
             require(path.join("../", route))(router);
             //print nicely to console to see all routes
-            logger.info(`[${dir}]${dir==="API"?"  ":""} ${dir === "API" ? "/api/" : "/"}${file}`);
+            logger.info(`[${dir}]${dir === "API" ? "  " : ""} ${dir === "API" ? "/api/" : "/"}${file}`);
         });
     },
 
@@ -81,5 +84,27 @@ module.exports = {
         start = process.hrtime(); // reset the timer
     },
 
+
+
+    getHtml: path => new Promise((resolve, reject) =>
+        fs.readFile(path, 'utf-8', (err, contents) => {
+            if (err) return reject(err);
+
+            cache.set(path, contents);
+            return resolve(contents);
+        })
+    ),
+
+    csp: page => async (req, res, next) => {
+        const dirViews = "views/"
+        const pagePath = path.join(dirViews, page);
+        let html = cache.get(pagePath);
+        if (!html) {
+            html = await getHtml(pagePath);
+        }
+        newHTML = html.replace(/<script/g, `<script nonce="${nonce1}"`)
+            .replace(/<style/g, `<style nonce="${nonce1}"`);
+        res.send(newHTML);
+    }
 
 };

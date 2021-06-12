@@ -9,8 +9,11 @@ const Schema = mongoose.Schema;
  */
 const CalendarSchema = new Schema({
     user: { type: Schema.ObjectId, ref: 'User', required: true },
-    event: { type: String, required: true, trim: true },
-    time: { type: Date, required: true }
+    text: { type: String, required: true, trim: true },
+    start_date: { type: Date, required: true },
+    end_date: { type: Date, required: true },
+    eventId: { type: String, required: true },
+    color: { type: String },
 });
 
 module.exports = mongoose.model('Calendar', CalendarSchema);

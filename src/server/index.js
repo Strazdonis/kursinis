@@ -29,6 +29,9 @@ if (!checkDotEnv()) {
     logger.warn("Couldn't find .env file which is used for configuration. Program may work incorrectly.");
 }
 
+const crypto = require("crypto");
+nonce = crypto.randomBytes(16).toString("hex");
+
 // basic security
 app.use(helmet());
 // logging requests
@@ -74,15 +77,17 @@ app.use(express.static('public'));
 const csp = require('helmet-csp');
 
 
+
 // use hbs engine
 const handlebars = require('express-handlebars');
 app.set('view engine', 'hbs');
-app.engine('hbs', handlebars({
+hbs = handlebars.create({
     layoutsDir: __dirname + '/views/layouts',
     extname: 'hbs',
     helpers: require('./utils/handlebars-helpers')
-    // defaultLayout: 'default',
-}));
+});
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 app.use(function (req, res, next) {
     // if not logged in there's no user
@@ -103,8 +108,10 @@ app.use(function (req, res, next) {
             lastname: splitName[1],
             city: user.city,
             email: user.email,
+            
         };
         res.locals.session = payload;
+        res.locals.nonce = nonce;
     } catch (error) {
         logger.error(error.stack);
     }
@@ -143,11 +150,11 @@ app.use('/peerjs', peerServer);
 
 
 io.on('connection', socket => {
-    socket.on('join-room', (roomId, userId) => {
+    socket.on('join-room', (roomId, data) => {
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit('user-connected', userId);
+        socket.broadcast.to(roomId).emit('user-connected', data);
         socket.on('disconnect', () => {
-            socket.broadcast.to(roomId).emit('user-disconnected', userId);
+            socket.broadcast.to(roomId).emit('user-disconnected', data);
         });
     });
 });

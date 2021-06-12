@@ -2,87 +2,137 @@
 const socket = io();
 const videoGrid = document.getElementById('video-grid');
 const myPeer = new Peer();
-
-const myVideo = document.createElement('video');
-myVideo.muted = true;
 const peers = {};
 const peerEl = document.getElementById("peer-list");
 const peerList = [];
 let me;
 const ROOM_ID = window.location.pathname.replace("/room/", "");
-document.getElementById("room-id").innerHTML=ROOM_ID;
+document.getElementById("room-id").innerHTML = ROOM_ID;
 
-socket.connect({ transports: ['websocket'] })
+socket.connect();
 
+function createDivWithVideo(name, self = false) {
+    const div = document.createElement('div');
+    div.classList.add("card", "mx-3", "my-2");
+    div.style.width = "20rem";
+    div.innerHTML = `
+    <div class="card-header">
+        ${name} ${self ? "(You)" : ""}
+    </div>
+
+    <div class="card-body" style="padding: 1rem 0rem 0rem 0rem;">
+        <video class="card-img-top" style="border-radius:calc(.25rem - 1px)"></video>
+    </div>
+    `;
+    if (!self) {
+        div.innerHTML += `
+        <div class="mute-btn card-footer text-muted">
+            <i class="fas fa-volume-up"></i> <span>Mute</span>
+        </div>`;
+    }
+    return div;
+}
 
 async function getMedia(video, audio) {
     const stream = await navigator.mediaDevices.getUserMedia({
         video,
         audio
     });
-    addVideoStream(myVideo, stream);
+    const div = createDivWithVideo(my_name, true);
+    div.getElementsByTagName('video')[0].muted = true; // mute self
+    addVideoStream(div, stream);
 
     myPeer.on('call', call => {
         call.answer(stream);
-        const video = document.createElement('video');
+        
         call.on('stream', userVideoStream => {
-            peerList.push(...myPeer._connections.keys());
-            renderPeerList();
-            addVideoStream(video, userVideoStream);
+            console.log("u", userVideoStream);
+            console.log("c", call);
+            console.log(myPeer)
+            const keys = [...myPeer._connections.keys()];
+            const connections = keys.map(c => {
+                const name = myPeer._connections.get(c)[0].metadata.name;
+                return { id: c, name };
+            });
+            connections.forEach(connection => {
+                if (peerList.find(p => p.id === connection.id)) return;
+                peerList.push(connection);
+                const div = createDivWithVideo(connection.name);
+                addVideoStream(div, userVideoStream);
+            });
+            //renderPeerList();
+            
         });
     });
-    socket.on('user-connected', userId => {
-        console.log("Connected");
-        setTimeout(connectToNewUser, 1000, userId, stream);
+    socket.on('user-connected', data => {
+        console.log("Connected", data);
+        setTimeout(connectToNewUser, 1000, data, stream);
     });
 }
 
-socket.on('user-disconnected', userId => {
-    console.log('disconnected', userId);
-    const index = peerList.indexOf(userId);
+socket.on('user-disconnected', data => {
+    console.log('disconnected', data);
+    const index = peerList.indexOf(data.name);
     if (index !== -1) {
         peerList.splice(index, 1); //remove userId from array
     }
-    renderPeerList();
-    if (peers[userId]) peers[userId].close();
-})
+    //renderPeerList();
+    if (peers[data.id]) peers[data.id].close();
+});
 
 myPeer.on('open', async id => {
     me = id;
-    renderPeerList();
+    //renderPeerList();
     await getMedia(true, true).catch(console.error);
-    socket.emit('join-room', ROOM_ID, id);
+    console.log({ id, name: my_name });
+    socket.emit('join-room', ROOM_ID, { id, name: my_name });
 });
 
-function connectToNewUser(userId, stream) {
-    const call = myPeer.call(userId, stream)
-    const video = document.createElement('video');
-
+function connectToNewUser(data, stream) {
+    console.log("CONETON", data, stream)
+    const call = myPeer.call(data.id, stream, { metadata: { name: my_name } });
+    const div = createDivWithVideo(data.name, false);
     call.on('stream', userVideoStream => {
-
-        addVideoStream(video, userVideoStream);
-
+        addVideoStream(div, userVideoStream);
     });
     call.on('close', () => {
-        video.remove();
+        div.remove();
     });
 
-    peers[userId] = call;
-    peerList.push(userId);
-    renderPeerList();
+    peers[data.id] = call;
+    peerList.push(data);
+    //renderPeerList();
 }
 
-function addVideoStream(video, stream) {
+function addVideoStream(div, stream) {
+    const video = div.getElementsByTagName('video')[0];
     video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
         video.play();
     });
-    videoGrid.append(video);
+    const mute = [...div.getElementsByClassName('mute-btn')];
+    if (mute.length != 0) {
+        mute[0].addEventListener('click', (e) => {
+            const isMuted = video.muted;
+            const currentIcon = isMuted ? "fa-volume-mute" : "fa-volume-up";
+            const nextIcon = !isMuted ? "fa-volume-mute" : "fa-volume-up";
+            const iconEl = mute[0].getElementsByTagName("i")[0];
+            iconEl.classList.remove(currentIcon);
+            iconEl.classList.add(nextIcon);
+            const nextText = !isMuted ? "Unmute" : "Mute";
+            video.muted = !isMuted;
+            const textEl = mute[0].getElementsByTagName("span")[0];
+            textEl.innerHTML = nextText;
+        });
+    }
+
+    videoGrid.append(div);
 }
 
 function renderPeerList() {
-    peerEl.innerHTML = `<p>${me} (you)</p>`;
+    peerEl.innerHTML = `<p>${my_name} (you)</p>`;
+    console.log(peerList);
     peerList.forEach((peer) => {
-        peerEl.innerHTML += `<p>${peer}</p>`;
+        peerEl.innerHTML += `<p>${peer.name}</p>`;
     });
 }

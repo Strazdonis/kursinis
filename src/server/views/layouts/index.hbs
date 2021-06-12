@@ -21,20 +21,7 @@
 		</div>
 	</div>
 </body>
-<script>
-	document.getElementById("create-room").addEventListener("click", e => {
-		fetch("/api/create-room").then(res => res.json()).then((room) => {
-			window.location.href = "/room/" + room;
-		});
-	});
-	const input = document.getElementById("room-input");
-	document.getElementById("join-room").addEventListener("click", e => {
-		const room = input.value;
-		if(!room) {
-			return Swal.fire("You need to input a room id", "error", "error");
-		}
-		window.location.href = "/room/" + room;
-	})
-</script>
+
+<script src="/js/main.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>
