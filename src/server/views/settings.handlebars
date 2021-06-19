@@ -40,12 +40,24 @@
 </div>
 <div class="row mb-3">
     <div class="col-sm-3">
+        <h5>City:</h5>
+    </div>
+    <div class="col-sm-4">
+        <h5 class="text-font-bold">{{session.city}}</h5>
+    </div>
+    <div class="col-sm-4">
+        <a href="#" attr-field="city" attr-pretty="city" attr-current="{{session.city}}" class="settings-edit"><i class="fas fa-edit"></i> Edit</a>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col-sm-3">
         <h5>E-Mail:</h5>
     </div>
     <div class="col-sm-4">
         <h5 class="text-font-bold">{{session.email}}</h5>
     </div>
 </div>
+
 <div class="row mt-5 mb-2">
     <div class="col-sm-12">
         <h3>Password</h3>
