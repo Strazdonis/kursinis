@@ -14,7 +14,6 @@ module.exports = function (router) {
             return res.status(400).json({ error: "bad request, body.crypto must be an array" });
         }
 
-        // TODO: use a more mongoose approach by saving model?
         const user = req.user._id;
 
         Crypto.findOneAndUpdate({ user: user }, { crypto: track }, { upsert: true, new: true }, (err, doc) => {
@@ -101,9 +100,7 @@ module.exports = function (router) {
 
     router.post('/crypto/update_user', (req, res) => {
         const body = req.body;
-        let track = body.cryptos.map(c => xssFilters.inHTMLData(c));;
-        //TODO: validate if crypto is even available
-        //TODO: reject non-arrays?
+        let track = body.cryptos.map(c => xssFilters.inHTMLData(c));
         if (Array.isArray(track)) {
             track = track.map(c => c.toLowerCase());
         } else if (typeof track == "string") {
@@ -113,7 +110,6 @@ module.exports = function (router) {
             return res.status(400).json({ error: "bad request" });
         }
 
-        // TODO: use a more mongoose approach by saving model?
         const user = req.body.user;
 
         Crypto.findOneAndUpdate({ user: user }, { crypto: track }, { upsert: true, new: true }, (err, doc) => {

@@ -2,11 +2,11 @@ const morgan = require('morgan');
 const uuid = require('uuid');
 const logger = require("../logger/");
 module.exports = {
+    // API-only middleware, check if logged in etc.
+    // DEPRECATED: use auth.required instead
     apiRouterMiddleware: (function (req, res, next) {
-        // API-only middleware, check if logged in etc.
         const endpoint = req.path.replace(/\//g, "");
-        //TODO: get these more dynamically
-        const AuthOnly = ["crypto", "logout", "todo", "verify"];
+        const AuthOnly = ["crypto", "logout", "todo", "verify", "calendar"];
         if (AuthOnly.includes(endpoint) && !req.isAuthenticated()) {
             return res.status(401).json({ error: "You must be logged in!" });
         }

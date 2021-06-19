@@ -42,7 +42,7 @@ const generateCard = (data) => {
 const render = async () => {
     fetch("/api/crypto").then(res => res.json()).then(result => {
         if (result.name == "Error") {
-            return swal.fire(result.message, "Please try again later", "error");
+            return Swal.fire(result.message, "Please try again later", "error");
         }
         const cryptos = result.data;
         cryptos.forEach(crypto => {

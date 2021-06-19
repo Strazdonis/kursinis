@@ -4,7 +4,6 @@ module.exports = (app) => {
         res.render('room', { layout: 'index',
             partials: Promise.resolve({
                 script: hbs.handlebars.compile(`<script nonce="${nonce}">
-                    console.log("{{nonce}}")
                     const my_name = "{{session.fullname}}"
                 </script>`)
             })

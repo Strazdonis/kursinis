@@ -16,7 +16,7 @@ const updateTask = async (data, id) => {
 const deleteTask = async (id) => {
     const response = await postData(`/api/todo/${id}`, { id: id }, "DELETE");
     if (response.success) {
-        swal.fire("success", "successfully deleted task", "success");
+        Swal.fire("success", "successfully deleted task", "success");
         document.getElementById(`row_${id}`).style.display = "none";
 
     }

@@ -166,7 +166,7 @@ const routePath = "./routes/";
 // dynamically load routes from /routes
 loadRoutes(routePath, router, 'Route');
 const apiRoutePath = "./routes/api/";
-apiRouter.use(apiRouterMiddleware);
+//apiRouter.use(apiRouterMiddleware);
 
 loadRoutes(apiRoutePath, apiRouter, 'API');
 
@@ -177,7 +177,7 @@ app.use('/', router);
 app.use('/api', apiRouter);
 app.use('/admin', adminRouter);
 
-elapsedTime("START connectig to db");
+elapsedTime("START connecting to db");
 connectDb().then(async (connection) => {
     elapsedTime("END connecting to DB");
     const port = process.env.PORT || 3000;

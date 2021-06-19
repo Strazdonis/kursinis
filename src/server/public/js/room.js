@@ -34,40 +34,48 @@ function createDivWithVideo(name, self = false) {
 }
 
 async function getMedia(video, audio) {
-    const stream = await navigator.mediaDevices.getUserMedia({
-        video,
-        audio
-    });
-    const div = createDivWithVideo(my_name, true);
-    div.getElementsByTagName('video')[0].muted = true; // mute self
-    addVideoStream(div, stream);
-
-    myPeer.on('call', call => {
-        call.answer(stream);
-        
-        call.on('stream', userVideoStream => {
-            console.log("u", userVideoStream);
-            console.log("c", call);
-            console.log(myPeer)
-            const keys = [...myPeer._connections.keys()];
-            const connections = keys.map(c => {
-                const name = myPeer._connections.get(c)[0].metadata.name;
-                return { id: c, name };
-            });
-            connections.forEach(connection => {
-                if (peerList.find(p => p.id === connection.id)) return;
-                peerList.push(connection);
-                const div = createDivWithVideo(connection.name);
-                addVideoStream(div, userVideoStream);
-            });
-            //renderPeerList();
-            
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video,
+            audio
         });
-    });
-    socket.on('user-connected', data => {
-        console.log("Connected", data);
-        setTimeout(connectToNewUser, 1000, data, stream);
-    });
+        const div = createDivWithVideo(my_name, true);
+        div.getElementsByTagName('video')[0].muted = true; // mute self
+        addVideoStream(div, stream);
+
+        myPeer.on('call', call => {
+            call.answer(stream);
+
+            call.on('stream', userVideoStream => {
+                console.log("u", userVideoStream);
+                console.log("c", call);
+                console.log(myPeer)
+                const keys = [...myPeer._connections.keys()];
+                const connections = keys.map(c => {
+                    const name = myPeer._connections.get(c)[0].metadata.name;
+                    return { id: c, name };
+                });
+                connections.forEach(connection => {
+                    if (peerList.find(p => p.id === connection.id)) return;
+                    peerList.push(connection);
+                    const div = createDivWithVideo(connection.name);
+                    addVideoStream(div, userVideoStream);
+                });
+                //renderPeerList();
+
+            });
+        });
+        socket.on('user-connected', data => {
+            console.log("Connected", data);
+            setTimeout(connectToNewUser, 1000, data, stream);
+        });
+    } catch (err) {
+        if(video && audio) {
+            return getMedia(false, true);
+        } else {
+            return Swal.fire("Error", "Something went wrong, couldn't get your media devices.", "error")
+        }
+    }
 }
 
 socket.on('user-disconnected', data => {
@@ -83,7 +91,7 @@ socket.on('user-disconnected', data => {
 myPeer.on('open', async id => {
     me = id;
     //renderPeerList();
-    await getMedia(true, true).catch(console.error);
+    await getMedia(true, true)
     console.log({ id, name: my_name });
     socket.emit('join-room', ROOM_ID, { id, name: my_name });
 });

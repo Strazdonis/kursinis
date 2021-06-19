@@ -57,7 +57,6 @@ module.exports = (app) => {
         const task = xssFilters.inHTMLData(body.task);
         const user = req.user._id;
 
-        //TODO: validation?
         const todo = new Todo();
         todo.user = user;
         todo.task = task;

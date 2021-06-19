@@ -95,6 +95,7 @@ module.exports = (app) => {
             user.displayname = xssFilters.inHTMLData(req.body.displayname ?? user.displayname);
             user.firstname = xssFilters.inHTMLData(req.body.firstname ?? user.firstname);
             user.lastname = xssFilters.inHTMLData(req.body.lastname ?? user.lastname);
+            user.city = xssFilters.inHTMLData(req.body.city ?? user.city);
             // jshint ignore:end
             user.save(function (err) {
                 if (err) {

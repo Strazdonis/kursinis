@@ -46,8 +46,7 @@ document.getElementById("form").addEventListener('submit', async e => {
         todo_list.appendChild(el);
     } else {
         const errors = Object.values(response.error.errors).map(error => error.message).join("<br>");
-        swal.fire("Error", errors, 'error');
-        console.log(errors)
+        Swal.fire("Error", errors, 'error');
     }
     input.value = '';
 });

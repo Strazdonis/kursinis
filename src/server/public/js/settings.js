@@ -29,9 +29,9 @@ document.getElementById("changePassForm").addEventListener("submit", async (e) =
     const response = await postData("/api/user/changepass", body);
     console.log(response);
     if(response.error) {
-        swal.fire("Error", response.error == "IncorrectPasswordError" ? "Old password is incorrect" : response.message, "error");
+        Swal.fire("Error", response.error == "IncorrectPasswordError" ? "Old password is incorrect" : response.message, "error");
     }
     if(response.success) {
-        swal.fire("success", "Your password has been changed", "success");
+        Swal.fire("success", "Your password has been changed", "success");
     }
 });

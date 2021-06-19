@@ -17,7 +17,7 @@ const updateNote = async (data, id) => {
 const deleteNote = async (id) => {
     const response = await postData(`/api/notes/${id}`, { id: id }, "DELETE");
     if(response.success) {
-        swal.fire("success", "successfully deleted", "success");
+        Swal.fire("success", "successfully deleted", "success");
         document.getElementById(`row_${id}`).style.display = "none";
     }
 
