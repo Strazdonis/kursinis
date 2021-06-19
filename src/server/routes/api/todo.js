@@ -21,9 +21,8 @@ module.exports = (app) => {
         });
     });
 
-    app.put('/todo/:anything', (req, res) => {
+    app.put('/todo/:anything', auth.moderator, (req, res) => {
         const body = req.body;
-        const user = body.user;
         const id = body.id;
         const data = {};
 
@@ -33,7 +32,7 @@ module.exports = (app) => {
         if (Object.keys(data).length === 0) {
             return res.status(400).json({ error: "nothing to update" });
         }
-        Todo.updateOne({ user, _id: id }, { $set: data }, (err, doc) => {
+        Todo.updateOne({ _id: id }, { $set: data }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -41,10 +40,10 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/todo/:id', (req, res) => {
+    app.delete('/todo/:id', auth.moderator, (req, res) => {
         const body = req.body;
         const id = body.id;
-        Todo.deleteOne({ _id: id }, (err, doc) => {
+        Todo.deleteOne({ _id: id, }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -72,10 +71,8 @@ module.exports = (app) => {
 
     app.delete('/todo', (req, res) => {
         const body = req.body;
-        console.log(body);
         const user = req.user._id;
         const id = body.id;
-        console.log(user, id);
         Todo.deleteOne({ user, _id: id }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
@@ -85,7 +82,7 @@ module.exports = (app) => {
     });
 
     //update it's status or text
-    app.patch('/todo', (req, res) => {
+    app.patch('/todo', auth.required, (req, res) => {
         const body = req.body;
         const user = req.user._id;
         const id = body.id;
@@ -96,8 +93,6 @@ module.exports = (app) => {
         if (body.state) {
             data.state = xssFilters.inHTMLData(body.state);
         }
-        console.log(body);
-        console.log(user, id, data);
         if (Object.keys(data).length === 0) {
             return res.status(400).json({ error: "nothing to update" });
         }

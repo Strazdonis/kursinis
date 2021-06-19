@@ -3,7 +3,6 @@ fetch("/api/stats", { cache: "force-cache" }).then(res => res.json()).then(data 
     const todo_stats = document.getElementById("total-todos-stat");
     const crypto_stats = document.getElementById("total-cryptos-stat");
     const notes_stats = document.getElementById("total-notes-stat");
-    console.log(data);
     users_stats.innerHTML = data.users || "N/A";
     todo_stats.innerHTML = data.todo || "N/A";
     crypto_stats.innerHTML = data.crypto || "N/A";
@@ -25,6 +24,19 @@ fetch("/api/notes/new").then(res => res.json()).then(data => {
           </a>
         </td>`;
         el.getElementsByClassName("delete-icon")[0].addEventListener('click', e => {
+            const target = e.target;
+            const td = target.offsetParent;
+            const row = td.parentElement;
+            console.log(row.id);
+            fetch(`/api/notes/${row.id}`, {
+                method: "DELETE",
+            }).then(res => res.json()).then(response => {
+                if(response.success) {
+                    row.remove();
+                } else {
+                    Swal.fire("something went wrong", `please try again<br>Error:<br>${response.error}`, "error")
+                }
+            })
             console.log('clicked', e.target);
         });
         container.appendChild(el);

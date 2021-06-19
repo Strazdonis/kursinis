@@ -4,7 +4,7 @@ const logger = require("../../logger");
 const { auth } = require('../../utils/middlewares');
 const xssFilters = require('xss-filters');
 module.exports = function (router) {
-    router.post('/crypto', (req, res) => {
+    router.post('/crypto', auth.required, (req, res) => {
         const body = req.body;
         let track = body.crypto.map(c => xssFilters.inHTMLData(c));
         if (Array.isArray(track)) {
@@ -24,7 +24,7 @@ module.exports = function (router) {
         });
     });
 
-    router.delete('/crypto', (req, res) => {
+    router.delete('/crypto', auth.required, (req, res) => {
         const body = req.body;
         let crypto = body.crypto;
         const user = req.user._id;
@@ -52,7 +52,7 @@ module.exports = function (router) {
         });
     });
 
-    router.put('/crypto', (req, res) => {
+    router.put('/crypto', auth.required, (req, res) => {
         const body = req.body;
         let track = body.crypto.map(c => xssFilters.inHTMLData(c));
         if (!Array.isArray(track)) {
@@ -98,7 +98,7 @@ module.exports = function (router) {
 
     });
 
-    router.post('/crypto/update_user', (req, res) => {
+    router.post('/crypto/update_user', auth.required, (req, res) => {
         const body = req.body;
         let track = body.cryptos.map(c => xssFilters.inHTMLData(c));
         if (Array.isArray(track)) {
@@ -120,7 +120,7 @@ module.exports = function (router) {
         });
     });
 
-    router.get('/crypto', (req, res) => {
+    router.get('/crypto', auth.required, (req, res) => {
         const user = req.user._id;
 
         Crypto.findOne({ user: user }, async (err, doc) => {

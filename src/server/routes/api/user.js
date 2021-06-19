@@ -23,7 +23,7 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/user/', (req, res) => {
+    app.delete('/user/', auth.required, (req, res) => {
         const body = req.body;
         const uid = body.id;
         User.deleteOne({ _id: uid }, (err, doc) => {

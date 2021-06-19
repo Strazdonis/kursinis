@@ -1,8 +1,9 @@
 let Parser = require('rss-parser');
 let parser = new Parser();
+const { auth } = require('../../utils/middlewares');
 const logger = require('../../logger');
 module.exports = async (app) => {
-    app.get('/news/:feed', async (req, res) => {
+    app.get('/news/:feed', auth.required, async (req, res) => {
         const feeds = {
             "bbc": "http://feeds.bbci.co.uk/news/rss.xml",
             "15min": "https://www.15min.lt/rss",

@@ -13,7 +13,7 @@ module.exports = (app) => {
             res.send(data);
         });
     });
-    app.post('/calendar-data', function (req, res) {
+    app.post('/calendar-data', auth.required, function (req, res) {
         const data = req.body;
         const user = req.user._id;
         data.user = user;

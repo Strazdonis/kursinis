@@ -1,7 +1,7 @@
 const { v4: uuidV4 } = require('uuid');
-
+const { auth } = require('../../utils/middlewares');
 module.exports = (app) => {
-    app.get('/create-room', (req, res) => {
+    app.get('/create-room', auth.required, (req, res) => {
         // first makes a room id from creator's full name, then from creator's id and then a random one.
         let id = req.user.fullname.replace(/\s/g, "_");
         if(rooms.includes(id)) {

@@ -8,7 +8,6 @@ const capitalize = (s) => {
 };
 
 const updateTracks = async (data, id) => {
-    console.log(data);
     const result = await postData("/api/crypto/update_user", data, "POST");
     return result;
 };
@@ -33,7 +32,6 @@ const generateViewButton = (id, cryptos, element) => {
                     `,
             focusConfirm: false,
             preConfirm: () => {
-                console.log(document.getElementById('swal-cryptos').value);
                 return {
                     user: id,
                     cryptos: document.getElementById('swal-cryptos').value.split(", "),
@@ -59,7 +57,6 @@ const generateViewButton = (id, cryptos, element) => {
 fetch("/api/crypto/all").then(res => res.json()).then(response => {
     const data = response.result;
     const table = $("#table");
-    console.log(data);
     data.forEach(crypto => {
         const html = `<td>${crypto.user}</td>
                 <td>${crypto.crypto.join(", ")}</td>

@@ -1,6 +1,7 @@
 const User = require('../../models/user');
+const { auth } = require('../../utils/middlewares');
 module.exports = function (router) {
-    router.post('/verify', (req, res) => {
+    router.post('/verify', auth.required, (req, res) => {
         const body = req.body;
         let submitted = body.code;
         if (typeof submitted != "string") {
@@ -24,7 +25,7 @@ module.exports = function (router) {
         }
     });
 
-    router.get('/verify', (req, res) => {
+    router.get('/verify', auth.required, (req, res) => {
         return res.status(200).json({ status: req.user.verified });
     });
 };

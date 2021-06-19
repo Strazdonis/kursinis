@@ -2,7 +2,7 @@ const Notes = require('../../models/notes');
 const { auth } = require('../../utils/middlewares');
 const xssFilters = require('xss-filters');
 module.exports = (app) => {
-    app.get('/notes', (req, res) => {
+    app.get('/notes', auth.required, (req, res) => {
         const user = req.user._id;
         Notes.find({ user: user }, (err, doc) => {
             if (err) {
@@ -41,16 +41,13 @@ module.exports = (app) => {
     //update it's text
     app.put('/notes/:user_id', auth.moderator, (req, res) => {
         const body = req.body;
-        console.log(body);
-        const user = body.user;
         const id = body.id;
         const data = { text: xssFilters.inHTMLData(body.text), title: xssFilters.inHTMLData(body.title) };
 
-        console.log(data, id, user);
         if (Object.keys(data).length === 0) {
             return res.status(400).json({ error: "nothing to update" });
         }
-        Notes.updateOne({ user, _id: id }, { $set: data }, (err, doc) => {
+        Notes.updateOne({ _id: id }, { $set: data }, (err, doc) => {
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -58,7 +55,7 @@ module.exports = (app) => {
         });
     });
 
-    app.post('/notes', (req, res) => {
+    app.post('/notes', auth.required, (req, res) => {
         const body = req.body;
         const text = body.text;
         const title = body.title;
@@ -77,13 +74,12 @@ module.exports = (app) => {
         });
     });
 
-    app.delete('/notes', (req, res) => {
+    app.delete('/notes', auth.required, (req, res) => {
         const body = req.body;
         const user = req.user._id;
         const id = body.id;
-        console.log(id);
+
         Notes.deleteOne({ user, _id: id }, (err, doc) => {
-            console.log(doc);
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -92,12 +88,9 @@ module.exports = (app) => {
     });
 
     app.delete('/notes/:id', auth.moderator, (req, res) => {
-        const body = req.body;
+        const body = req.params;
         const id = body.id;
-        console.log(body)
-
         Notes.deleteOne({ _id: id }, (err, doc) => {
-            console.log(doc);
             if (err) {
                 return res.status(500).json({ error: err });
             }
@@ -106,7 +99,7 @@ module.exports = (app) => {
     });
 
     //update it's text
-    app.patch('/notes', (req, res) => {
+    app.patch('/notes', auth.required, (req, res) => {
         const body = req.body;
         const user = req.user._id;
         const id = body.id;
@@ -119,7 +112,6 @@ module.exports = (app) => {
         }
         const errors = {};
         // mongoose doesnt validate on update requests, validate manually
-        console.log(body.text, body.title)
         if (body.text == "" || body.text.trim() == "" || data.text == "" || data.text.trim() == "") {
             // match mongoose error format
             errors.text = { message: "Text field is required" };
@@ -131,7 +123,6 @@ module.exports = (app) => {
         if (errors.text || errors.title) {
             return res.status(400).json({ error: { errors } });
         }
-        console.log(data, id);
         if (Object.keys(data).length === 0) {
             return res.status(400).json({ error: "nothing to update" });
         }
