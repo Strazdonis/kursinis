@@ -1,11 +1,11 @@
 Autoriai: Edvinas Strazdonis ir Rokas Buoželis VU MIF IT 2 kursas, 2 grupė
 Projektas: Internetinės aplikacijos kurimas - Dashboard (Talkie)
 
-1. "doc/Kursinis (latex)" yra VU latex šablonas.
-2. "doc/Kursinis (pdf)" yra kursinio darbo dokumentacija remiantis VU latex šablonu.
+1. "doc/Kursinis (pdf)" yra kursinio darbo dokumentacija remiantis VU latex šablonu.
 2. "doc/Kursinis (word) latest" yra naujausia kursinio darbo dokumentacija.
 3. "bin/" yra supakuotas src/ turinys į .exe ir linux vykdomuosius failus patogiam paleidimui. 
 	Vykdomąjį failą rekomenduojama perkelti į src/server/ direktoriją geriausiam veikimui.
+	Rekomenduojama aplikacija paleisti per terminalą naudojantis node index.js komanda src/server/ direktorijoje
 4. "src/" kataloge yra saugomas vartotojo sąsajos bei puslapio serverio kodas.
 5. Darbo paleidimui (nesinaudojant supakuotais executable failais) reikalingos priemonės:
 	1) Node.JS (v14.16+)
@@ -15,7 +15,7 @@ Projektas: Internetinės aplikacijos kurimas - Dashboard (Talkie)
 6. Darbo kompiliavimui į vykdomąjį failą naudojama pkg (https://www.npmjs.com/package/pkg) biblioteka
 	1) 'npm run build' src/server/ direktorijoje
 7. Internetinė aplikacija yra paleista ant OpenNebula sistemos adresu http://193.219.91.103:10663/
-8. Prie serverio galima prisijungti naudojant komandą ssh -p 1539 admin@193.219.91.103, slaptažodis yra edvinas.
+8. Prie serverio galima prisijungti naudojant komandą ssh -p 1539 admin@193.219.91.103, vartotojo slaptažodis yra edvinas.
 9. Internetinės aplikacijos admin vartotojo prisijungimas yra: admin@admin.com slaptažodis 123456
 Paprasto vartotojo prisijungimas: paprastas@vartotojas.com slaptažodis 123456
 
