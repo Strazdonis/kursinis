@@ -363,3 +363,18 @@ ul.no-bullets {
   padding: 5px;
   width: 100%;
 }
+
+@media only screen and (max-width: 767px) {
+  .bg-color-menu {
+    border-radius: 60px 60px 0px 0px !important;
+  }
+  .bg-color-dash {
+    border-radius: 0px 0px 60px 60px !important;
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  .dhx_cal_date {
+    display: none;
+  }
+}

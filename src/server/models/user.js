@@ -27,7 +27,6 @@ const UserSchema = new Schema({
     firstname: { type: String, required: "First name is required", },
     lastname: { type: String, required: "Last name is required" },
     city: { type: String, trim: true, }, //for weather
-    country: { type: String, trim: true, },
     email: {
         type: String,
         trim: true,

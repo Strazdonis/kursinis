@@ -47,9 +47,6 @@ async function getMedia(video, audio) {
             call.answer(stream);
 
             call.on('stream', userVideoStream => {
-                console.log("u", userVideoStream);
-                console.log("c", call);
-                console.log(myPeer)
                 const keys = [...myPeer._connections.keys()];
                 const connections = keys.map(c => {
                     const name = myPeer._connections.get(c)[0].metadata.name;
@@ -66,14 +63,13 @@ async function getMedia(video, audio) {
             });
         });
         socket.on('user-connected', data => {
-            console.log("Connected", data);
             setTimeout(connectToNewUser, 1000, data, stream);
         });
     } catch (err) {
         if(video && audio) {
             return getMedia(false, true);
         } else {
-            return Swal.fire("Error", "Something went wrong, couldn't get your media devices.", "error")
+            return Swal.fire("Error", "Something went wrong, couldn't get your media devices.", "error");
         }
     }
 }
@@ -92,12 +88,10 @@ myPeer.on('open', async id => {
     me = id;
     //renderPeerList();
     await getMedia(true, true)
-    console.log({ id, name: my_name });
     socket.emit('join-room', ROOM_ID, { id, name: my_name });
 });
 
 function connectToNewUser(data, stream) {
-    console.log("CONETON", data, stream)
     const call = myPeer.call(data.id, stream, { metadata: { name: my_name } });
     const div = createDivWithVideo(data.name, false);
     call.on('stream', userVideoStream => {

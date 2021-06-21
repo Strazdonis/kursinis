@@ -6,7 +6,6 @@ module.exports = {
       return options.inverse(this);
     },
     isModerator: function(arg1, arg2, options) {
-        console.log(options);
         return (arg1 == "moderator" || arg1 == "admin") ? arg2.fn(this) : arg2.inverse(this);
     },
 }
