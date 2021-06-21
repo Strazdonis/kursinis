@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="101" height="90" viewBox="0 0 101 90">
+  <defs>
+    <style type="text/css">@import url('https://fonts.googleapis.com/css2?family=Pacifico');</style>
+  </defs>
   <g id="Group_80" data-name="Group 80" transform="translate(829 -995)">
     <circle id="Ellipse_8" data-name="Ellipse 8" cx="45" cy="45" r="45" transform="translate(-829 995)" fill="rgba(133,18,251,0.17)"/>
     <text id="Talkie" transform="translate(-814 1038)" fill="#9e85b7" font-size="33" font-family="Pacifico-Regular, Pacifico"><tspan x="0" y="0">Talkie</tspan></text>

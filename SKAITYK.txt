@@ -14,3 +14,8 @@ Projektas: Internetinės aplikacijos kurimas - Dashboard (Talkie)
 		'npm install' src/server/ direktorijoje
 6. Darbo kompiliavimui į vykdomąjį failą naudojama pkg (https://www.npmjs.com/package/pkg) biblioteka
 	1) 'npm run build' src/server/ direktorijoje
+7. Internetinė aplikacija yra paleista ant OpenNebula sistemos adresu http://193.219.91.103:10663/
+8. Prie serverio galima prisijungti naudojant komandą ssh -p 1539 admin@193.219.91.103, slaptažodis yra edvinas.
+9. Internetinės aplikacijos admin vartotojo prisijungimas yra: admin@admin.com slaptažodis 123456
+Paprasto vartotojo prisijungimas: paprastas@vartotojas.com slaptažodis 123456
+
